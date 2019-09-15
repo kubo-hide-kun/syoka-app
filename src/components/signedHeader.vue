@@ -106,7 +106,8 @@ export default {
   },
   methods: {
     transitionPage: function(page){
-      alert(page);
+      if(page==='logout')this.$store.state.signed =  false;
+      else alert("該当ページは存在しません / " + page);
     },
     querySelections:  function(v) {
       this.loading = true

@@ -2,9 +2,10 @@
   <v-app>
     <Header />
     <v-content>
-      <SignedHeader/>
-      <!-- <Header /> -->
+      <SignedHeader v-if="this.$store.state.signed"/>
+      <Header v-else/>
     </v-content>
+    <HelloWorld />
   </v-app>
 </template>
 
