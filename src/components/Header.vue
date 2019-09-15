@@ -24,18 +24,20 @@
 
     <v-spacer></v-spacer>
 
-    <v-autocomplete
-      v-model="select"
-      :loading="loading"
-      :items="items"
-      :search-input.sync="search"
-      cache-items
-      class="mx-4"
-      flat
-      hide-no-data
-      hide-details
-      label="ページの検索"
-    ></v-autocomplete>
+    <div class="searchForm">
+      <v-autocomplete
+          v-model="select"
+        :loading="loading"
+        :items="items"
+        :search-input.sync="search"
+        qcache-items
+        class="mx-4"
+        flat
+        hide-no-data
+        hide-details
+        label="ページの検索"
+      ></v-autocomplete>
+    </div>
   </v-app-bar>
 </template>
 
@@ -89,5 +91,8 @@ export default {
 <style scoped>
 .headline {
   margin: 0 20px; 
+}
+.searchForm {
+  width: 425px; 
 }
 </style>
