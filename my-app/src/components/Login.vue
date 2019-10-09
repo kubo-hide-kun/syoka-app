@@ -1,211 +1,186 @@
 <template>
-  <!--Vuetifyを使用する範囲-->
-  <v-app>
+<v-app>
+  <v-layout wrap>
+    <v-flex>
+      <div id="app" class="pa-0 ma-0">
+<v-app id="inspire" class="pa-0 ma-0">
 
-<svg  height="8%" z-index="2">
-    <ellipse cx="50%" cy="30%" rx="60%" ry="50%" fill="#41BFDD" />
-    <g font-family="sans-serif" fill="white" font-size="200%">
-            <text x="50%" y="50%" text-anchor="middle">
-            Shoka Manager
-        </text>
-    </g>
+<svg  height="80" wlass="pa-0 ma-0">
+  <ellipse cx="50%" cy="30%" rx="60%" ry="70%" fill="#41BFDD" />
+  <g font-family="sans-serif" fill="white" font-size="200%">
+  <text x="50%" y="65%" text-anchor="middle">
+    Shoka Manager
+  </text>
+  </g>
 </svg>
+ <v-flex  class="pr-0 pl-0 flex-parallax">
 
-
-    <!--Vuetifyのレイアウトシステムでサイドメニューと連動させるために必要なタグ。-->
-    <!--<v-content>-->
-      <!--Vuetifyでレイアウトを設定する範囲ー親要素-->
-      <v-container>
-        <!--親要素コンテンツごとのレイアウトを決める-->
-        <v-layout wrap>
-          <!--子要素-コンテンツの中のギャラリー-->
-          <v-flex>
-<div id="app">
-
-
-
-
-  <v-app id="inspire">
-  <!--パララックス背景-->
-
-
-
-  <v-parallax
-    src="https://cdn.vuetifyjs.com/images/parallax/material.jpg"
-    height="800"
-  >
-
-  <v-row
-    align="center"
-    justify="center"
-  >
-
-  <h1 class="display-2 font-weight-thin mb-4">Vuetify.js</h1>
-  <h4 class="subheading">
-
-      <v-form
-      ref="form"
-      v-model="valid"
-      lazy-validation
-    >
-      <v-text-field
-        v-model="name"
-        :counter="10"
-        :rules="nameRules"
-        label="Name"
-        required
-      ></v-text-field>
-  
-      <v-text-field
-        v-model="email"
-        :rules="emailRules"
-        label="E-mail"
-        required
-      ></v-text-field>
-  
-      <v-select
-        v-model="select"
-        :items="items"
-        :rules="[v => !!v || 'Item is required']"
-        label="Item"
-        required
-      ></v-select>
-  
+<v-parallax class="pr-5 pl-5 pt-0 parallax" src="https://drive.google.com/uc?export=view&id=1TWZJTRd6uNoDk6Ffr2Qd5g96zFJdShbe">
+<v-row  align="center"  justify="center" >
+  <v-flex xs12 sm12 md4>
+    <v-form ref="form"  v-model="valid" lazy-validation class="login-form pa-10">
+      <v-text-field v-model="name" :counter="10" :rules="nameRules"  label="Name"  required>
+      </v-text-field>
+      <v-text-field v-model="pass" :rules="emailRules" label="pass" required>
+      </v-text-field>
       <v-checkbox
         v-model="checkbox"
         :rules="[v => !!v || 'You must agree to continue!']"
         label="Do you agree?"
         required
       ></v-checkbox>
-  
       <v-btn
         :disabled="!valid"
         color="success"
-        class="mr-4"
+        class="mr-2 mt-2"
         @click="validate"
       >
-        Validate
+        login
       </v-btn>
-  
       <v-btn
         color="error"
-        class="mr-4"
+        class="mr-2 mt-2"
         @click="reset"
       >
-        Reset Form
+        reset
       </v-btn>
-  
+
+      <!--new acountボタンと新規登録画面-->
+      <v-dialog v-model="dialog" persistent max-width="400">
+      <template v-slot:activator="{ on }">
       <v-btn
+        class="mt-2"
         color="warning"
-        @click="resetValidation"
+        dark
+        @click.stop="dialog = true"
       >
-        Reset Validation
+        new acount
       </v-btn>
+      </template>
+      <v-card> 
+        <v-card-title class="headline">新規登録！</v-card-title>
+        <v-text-field label="Name*" required class="mr-5 ml-5"></v-text-field>
+        <v-text-field label="Email*" required class="mr-5 ml-5"></v-text-field>
+        <v-text-field label="Password*" type="password" required class="mr-5 ml-5"></v-text-field>
+          <v-card-actions>
+        <v-checkbox
+          v-model="checkbox"
+          :rules="[v => !!v || 'You must agree to continue!']"
+          label="Do you agree?"
+          required
+          class="ml-3"
+        ></v-checkbox>
+          <v-btn color="green darken-1" text @click="dialog = false">キャンセル</v-btn>
+          <v-btn color="green darken-1" text @click="dialog = false">登録</v-btn>  
+        </v-card-actions>
+      </v-card>
+      </v-dialog> 
     </v-form>
-  </h4>
-
-  <img
-  height="400px"
-  width="300px"
-  src="../assets/syoka-main.png"
-  elevation="12"
-  >
-
-  </v-row>
-
-    </v-parallax>
-<!--cardの設定-->
-
-
-
-<v-card
-  max-width="100%"
-        class="mt-n12"
-        elevation="12"
->
-      <v-container
-        class="pa-10"
-        fluid
-      >
-  <v-row>
-    <!--cardのレイアウト構成順番-->
-    <v-col
-      v-for="card in cards"
-      :key="card.title"
-      :cols="card.flex"
-    >
-<!--cardのレイアウト-->
-<v-flex xs12 md12>
-<v-card>
-
-              <v-img
-                :src="card.src"
-                class="white--text"
-                height="200px"
-                width="100%"
-                gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
-              >
-                <v-card-title
-                  class="fill-height align-end"
-                  v-text="card.title"
-                ></v-card-title>
-              </v-img>
-                  <v-card-text>
-        <span>Number 10</span><br>
-        <span class="text--primary">
-          <span>Whitehaven Beach</span><br>
-          <span>Whitsunday Island, Whitsunday Islands</span>
-        </span>
-      </v-card-text>
-
-</v-card>
-</v-flex>
-  </v-col>
-</v-row></v-container>
-</v-card>
-
-
-
+  </v-flex>
+  <img height="300" width="300" class="cube ml-5" src= "https://drive.google.com/uc?export=view&id=1x0GKvBPFGXXl6RyircWEboenBxeIsLtN">
+  <img height="400" width="265" src= "https://drive.google.com/uc?export=view&id=1iCEvmUTG1wXexB7qb2dfIQJoIw7eB9-H">
+</v-row>
+</v-parallax>  
+ </v-flex>  
 <br>
-<v-flex 
-  class="mt-10">
- <v-card
-      max-width="100%"
-      class="mt-n12"
-        elevation="12"
-    >
-      <v-card-title>I'm a title rrrr</v-card-title>
-      <v-card-text>I'm card text</v-card-text>
-      <v-card-actions>
-        <v-btn text>Click</v-btn>
-      </v-card-actions>
-    </v-card>
+
+<v-flex  class="mt-n12 pt-5 pr-3 pl-3 " elevation="12">
+  <v-card class="pr-3 pl-3">
+  <v-row>
+    <v-col  v-for="card in cards" :key="card.title" :cols="card.flex">
+    <v-flex>
+      <v-card height="300px" width="400px">
+        <v-img  :src="card.src" class="white--text" height="200px" width="100%" gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"> 
+        <v-card-title class="fill-height align-end" v-text="card.title">
+        </v-card-title>
+        </v-img>
+        <v-card-text  class="text--primary" v-text="card.text">
+        </v-card-text>
+      </v-card>
+    </v-flex>
+    </v-col>
+  </v-row>
+  </v-card>
 </v-flex>
+<br>
 
-
-
-  </v-app>
-</div>
-          </v-flex>
-
-        </v-layout>
-      </v-container>
-
-<!--ガイドライン-->
-
-          <!--ガイドライン内のギャラリー-->
-    <!--</v-content>-->
-
-  </v-app>
+<v-flex  class="mt-n12 pt-10 pr-3 pl-3 " elevation="12" z-index="10" absolute="ture">
+  <v-card class="pr-3 pl-3">
+  <v-timeline align-top :dense="$vuetify.breakpoint.smAndDown">
+    <v-timeline-item
+      v-for="(item, i) in items"
+      :key="i"
+      :color="item.color"
+      :icon="item.icon"
+      fill-dot
+    >
+    <v-card
+      :color="item.color"
+      dark
+    >
+    <v-card-title class="title" v-text="item.title"></v-card-title>
+    <v-card-text class="white text--primary" v-text="item.text">
+    </v-card-text>
+    </v-card>
+    </v-timeline-item>
+  </v-timeline>
+  </v-card>
+</v-flex>
+ 
+</v-app>
+      </div>
+    </v-flex>
+  </v-layout>
+</v-app>
 </template>
+
 <script>
 export default {
   data: () => ({
+dialog: false,
 cards: [
-      { title: 'Pre-fab homes', src: 'https://cdn.vuetifyjs.com/images/cards/road.jpg'},
-      { title: 'Favorite road trips', src: 'https://cdn.vuetifyjs.com/images/cards/road.jpg'},
-      { title: 'Best airlines', src: 'https://cdn.vuetifyjs.com/images/cards/road.jpg'},
-    ],
+  { title: 'プロジェクトの進行度を可視化', src: "https://drive.google.com/uc?export=view&id=1PFl6xkPjJM8SajaPz6FyaVFn0zZYp4i9",text:"独自のアルゴリズムでチームの開発の進行状況を数値化し、完成までの逆算を行います。"},
+  { title: '開発スケジュールの作成', src:  "https://drive.google.com/uc?export=view&id=1MGgyDgQ1XwfC9u_WoCFlvXeQyYZlOm8B",text:"カレンダー機能で用途に合わせたタスクが追加できます、追加したタスクはフィルタ検索機能によりタスク確認の効率化が行えます。"},
+  { title: 'チーム間のヒヤリング', src:  "https://drive.google.com/uc?export=view&id=1rDpAT-QK6hzex-6VV35wTpevAbJnpdyG",text:"個人のタスクに遅延が起きた場合やすれ違いの際に、全員に情報が共有されます。ミスしたタスクはチームメンバーから助太刀をしてもらいましょう！"},
+],
+items: [
+  { color: 'red lighten-2', icon: 'mdi-star', title:'プロジェクトを立ち上げよう！', text:'メイン画面にある左上のプロジェクト立ち上げボタンからプロジェクト名を決めて、参加メンバーを追加しよう！',},
+  { color: 'purple darken-1', icon: 'mdi-book-variant', title:'開発スケジュールを作成しよう！', text:'プロジェクト画面にあるカレンダー機能を使ってスケジュールをいつでも編集しよう！完成したスケジュールはチームメンバーとリアルタイムで共有できる！',},
+  { color: 'green lighten-1', icon: 'mdi-airballoon', title:'チーム全体の開発進行度を見渡そう！', text:'各プロジェクトメイン画面に開発進行度はしょーかちゃんが開発の進行状況を解析し数値化したもの！タスクが遅れた場合はしょーかちゃんがチームメンバー全員に知らせてくれます！',},
+  { color: 'indigo', icon: 'mdi-buffer', title:'フィルタ検索機能でタスクを管理しよう！', text:'左上にあるフィルタ検索機能からプロジェクトの確認とタスクを確認しよう！終了したタスクは完了ボタンんを忘れずに！',},
+],
+
   }),
 };
+
 </script>
+
+<style scoped>
+.login-form {
+  border-radius: 20px 20px 20px 20px;
+  background-color: rgba(255,255,255,0.8);
+  height: 350px;
+  box-shadow: 2px 2px 4px gray;
+}
+.cube{
+  animation: cube 3s linear infinite;
+  transform-origin: 50% 50%;
+  margin: 1rem 0 !important;
+}
+@keyframes cube {
+  0% { transform: translateY(0) }
+  33.33333% { transform: translateY(-10px) }
+  66.66667% { transform: translateY(0) }
+  100% { transform: translateY(0) }
+}
+
+@media screen and (max-width: 500px) {
+  .flex-parallax {
+    height:1000px;
+  }
+  .parallax {
+    height:100%;
+  }
+}
+
+</style>>
