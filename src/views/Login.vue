@@ -9,7 +9,7 @@
   <ellipse cx="50%" cy="30%" rx="60%" ry="70%" fill="#41BFDD" />
   <g font-family="sans-serif" fill="white" font-size="200%">
   <text x="50%" y="65%" text-anchor="middle">
-    Shoka Manager
+    Shoka VPM
   </text>
   </g>
 </svg>
@@ -45,7 +45,6 @@
         reset
       </v-btn>
 
-      <!--new acountボタンと新規登録画面-->
       <v-dialog v-model="dialog" persistent max-width="400">
       <template v-slot:activator="{ on }">
       <v-btn
