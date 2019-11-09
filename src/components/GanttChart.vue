@@ -22,7 +22,7 @@
       :weekends="calendarWeekends"
       :events="calendarEvents"
       :resources="calendarResources"
-      @dateClick="handleDateClick"
+      @eventClick="handleEventClick"
     />
   </div>
 </template>
@@ -64,7 +64,12 @@ export default {
       ],
       calendarEvents: [
         // initial event data
-        { title: "Event Now", start: new Date('November 9, 2019 9:00:00'), end: new Date('November 9, 2019 18:00:00'), resourceId: 'a' }
+        { 
+          title: "Event Now",
+          start: new Date('November 9, 2019 9:00:00'),
+          end: new Date('November 9, 2019 18:00:00'),
+          resourceId: 'a'
+        }
       ]
     };
   },
@@ -76,15 +81,8 @@ export default {
       let calendarApi = this.$refs.fullCalendar.getApi(); // from the ref="..."
       calendarApi.gotoDate("2000-01-01"); // call a method on the Calendar object
     },
-    handleDateClick(arg) {
-      if (confirm("Would you like to add an event to " + arg.dateStr + " ?")) {
-        this.calendarEvents.push({
-          // add new event data
-          title: "New Event",
-          start: arg.date,
-          allDay: arg.allDay
-        });
-      }
+    handleEventClick(arg) {
+      console.log(arg);
     }
   }
 };
