@@ -49,35 +49,37 @@
       </v-tabs-items>
   
 
-    <!--ガントチャート&bot-->
+
+
+    <!--bot-->
   
-    <v-timeline>
-      <v-timeline-item
-        v-for="n in 2"
-        :key="n"
-        large
-      >
+<v-card color="#FFFFFF" class="pr-5">
+      </v-timeline>
+      <v-timeline  dense>
+        <v-timeline-item
+          v-for="n in 2"
+          :key="n"
+        >
         <template v-slot:icon>
-          <v-avatar>
-            <img src= "https://drive.google.com/uc?export=view&id=1iCEvmUTG1wXexB7qb2dfIQJoIw7eB9-H">
+          <v-avatar size="75" tile >
+            <img src= "https://drive.google.com/uc?export=view&id=1SKcQJQkJZYB6oMtBv-7FPX_yp7AXFEBq">
           </v-avatar>
         </template>
-        <template v-slot:opposite>
+    
+          <span slot="opposite">Tus eu perfecto</span>
+          <v-card class="elevation-2">
+            <v-card-title class="headline">Lorem ipsum</v-card-title>
+            <v-card-text>
+              Lorem ipsum dolor sit amet, no nam oblique veritus. Commune scaevola imperdiet nec ut, sed euismod convenire principes at. Est et nobis iisque percipit, an vim zril disputando voluptatibus, vix an salutandi sententiae.
+            </v-card-text>
+          </v-card>
+        </v-timeline-item>
+      </v-timeline>
+       </v-card>
+</v-card>
 
-          <span>Tus eu perfecto</span>
-        </template>
-        <v-card class="elevation-2">
-          <v-card-title class="headline">Lorem ipsum</v-card-title>
-          <v-card-text>Lorem ipsum dolor sit amet,sententiae.</v-card-text>
-          
-        </v-card>
-      </v-timeline-item>
-    </v-timeline>
- 
 
 
-
-  </v-card>
 </v-flex>
       
       </v-layout>
@@ -92,15 +94,6 @@ export default {
 
   
   data: () => ({
-item: [
-  { color: '#41BFDD', title: 'Calendar',　artist: 'ガントチャートを組み合わせたカレンダー',　src:'https://drive.google.com/uc?export=view&id=1M301zAIBSYzs7B7TD9Hk_jtMucaCaJ4-',},
-  { color: '#FFB100', title: 'Bot',　artist: 'タスクが近づくと教えてくれたり、褒めてくれます。',　src:'https://drive.google.com/uc?export=view&id=1dq2A4l53agWXiTFJxnKdeD6O4bQ20ICr',},
-],
-item2: [
-  { color: '#FC785F', title: 'Activity',　artist: '活動の記録が見れます',　src:'https://drive.google.com/uc?export=view&id=1fV-iYiVnrml6AOGlvAe6iBdMu5z4d_Ot',},
-  { color: '#9DBE31', title: 'Gallery',　artist: '運営の趣味です',　src:'https://drive.google.com/uc?export=view&id=1HJD52I4U27uXASqCxsfl-I-jOl4l7vhM',},
-],
-
 
    tab: null,
       items: [
