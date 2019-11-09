@@ -1,20 +1,21 @@
 <template>
   <v-app>
     <Header />
-    <v-content>
-      <Login/>
-    </v-content>
+  <v-content>
+
+  </v-content>
+  
+    <transition name="page">
+      <router-view/>
+    </transition>
   </v-app>
 </template>
 
 <script>
-import Login from './views/Login.vue';
 import Header from './components/Header'
-
 export default {
   name: 'App',
   components: {
-    Login,
     Header
   },
   data: () => ({
