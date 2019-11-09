@@ -2,19 +2,19 @@
   <v-app>
     <Header />
     <v-content>
-      <Login/>
+      <router-view/>
     </v-content>
   </v-app>
 </template>
 
 <script>
-import Login from './views/Login.vue';
-import Header from './components/Header'
+// import Login from './views/Login.vue';
+import Header from './components/Header';
 
 export default {
   name: 'App',
   components: {
-    Login,
+    // Login,
     Header
   },
   data: () => ({
