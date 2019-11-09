@@ -14,6 +14,11 @@
     <!--メインコンテンツ-->
 <v-flex xs12 sm9 md9 order-md2 order-sm2>
   <v-card dark tile flat color="#FFFFFF" class="main-content pa-2">
+
+      <v-card-title class="text-center justify-center py-6" color="#00D2E3">
+        <h1 color="#00D2E3" class="font-weight-bold display-3 basil--text">Bot</h1>
+      </v-card-title>
+
         <transition name="page">
             <router-view/>
         </transition>
@@ -64,6 +69,7 @@
         <v-card class="elevation-2">
           <v-card-title class="headline">Lorem ipsum</v-card-title>
           <v-card-text>Lorem ipsum dolor sit amet,sententiae.</v-card-text>
+          
         </v-card>
       </v-timeline-item>
     </v-timeline>
