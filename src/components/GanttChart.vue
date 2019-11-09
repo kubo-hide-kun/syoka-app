@@ -11,7 +11,9 @@
       defaultView="resourceTimelineDay"
       :header="{
         left: 'prev,next today',
-        center: 'title',
+        center: isMobileView 
+          ? ''
+          : 'title',
         right: isGanttChart 
           ? 'resourceTimelineDay,resourceTimelineWeek,resourceTimelineMonth'
           : 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
@@ -46,7 +48,8 @@ export default {
   },
   data: function() {
     return {
-      isGanttChart: false,
+      isGanttChart: true,
+      isMobileView: true,
       calendarPlugins: [
         // plugins must be defined in the JS
         dayGridPlugin,
