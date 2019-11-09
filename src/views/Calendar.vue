@@ -12,8 +12,41 @@
 </v-flex>
 
     <!--メインコンテンツ-->
-<v-flex xs12 sm6 md6 order-md2 order-sm2>
+<v-flex xs12 sm9 md9 order-md2 order-sm2>
   <v-card dark tile flat color="#FFFFFF" class="main-content pa-2">
+
+        <transition name="page">
+            <router-view/>
+        </transition>
+
+
+    <router-link to="/Home" style="text-decoration:none;">
+      <v-tabs
+        v-model="tab"
+        background-color="transparent"
+        color="#00D2E3"
+        grow
+      >
+        <v-tab
+          v-for="item in items"
+          :key="item"
+        >
+          {{ item }}
+        </v-tab>
+      </v-tabs></router-link>
+
+      <v-tabs-items v-model="tab">
+        <v-tab-item
+          v-for="item in items"
+          :key="item"
+        >
+ 
+        </v-tab-item>
+      </v-tabs-items>
+  
+
+
+
     <!--掲示板-->
     <v-flex xs12>
       <v-card dark color="brown lighten-4">
@@ -33,7 +66,6 @@
           <v-layout row wrap>
     <!--ガントチャート&bot-->
     <v-flex v-for="item in item" :key="`6${item}`" xs12 md6>
-      <router-link :to="item.rink"  style="text-decoration:none;">
       <v-card :color="item.color" dark>
         <v-list-item three-line>
         <v-list-item-content class="align-self-start">
@@ -44,12 +76,10 @@
         <v-img :src="item.src"></v-img>
         </v-list-item-avatar></v-list-item>
       </v-card>
-      </router-link>
     </v-flex>
 
     <!--成績&ギャラリー-->
     <v-flex v-for="item2 in item2" :key="`6${item2}`" xs12 md6>
-      <router-link :to="item2.rink"  style="text-decoration:none;">
       <v-card :color="item2.color" dark>
         <v-list-item three-line>
         <v-list-item-content class="align-self-start">
@@ -60,26 +90,13 @@
         <v-img :src="item2.src"></v-img>
         </v-list-item-avatar></v-list-item>
       </v-card>
-      </router-link>
     </v-flex>
           </v-layout>
           </v-container>
 
   </v-card>
 </v-flex>
-
-    <!--サブコンテンツ-->
-<v-flex xs12 sm3 md3 order-md3 order-sm3>
-  <v-card dark tile flat color="transparent" class="sub-content">
-  <v-flex xs12 order-sm1>
-  <img height="100%" width="100%" class="pr-3 pl-3" src= "https://drive.google.com/uc?export=view&id=1x0GKvBPFGXXl6RyircWEboenBxeIsLtN">
-  </v-flex>
-  <v-flex xs12 order-sm2>
-  <img height="100%" width="100%" class="pr-8 pl-8" src= "https://drive.google.com/uc?export=view&id=1iCEvmUTG1wXexB7qb2dfIQJoIw7eB9-H">
-  </v-flex>
-  </v-card>
-</v-flex>
-        
+      
       </v-layout>
     </v-container>
   </v-layout>
@@ -90,18 +107,24 @@
 export default {
   data: () => ({
 item: [
-  { rink:'/Calendar' ,color: '#41BFDD', title: 'Calendar',　artist: 'ガントチャートを組み合わせたカレンダー',　src:'https://drive.google.com/uc?export=view&id=1M301zAIBSYzs7B7TD9Hk_jtMucaCaJ4-',},
-  { rink:'/Bot' ,color: '#FFB100', title: 'Bot',　artist: 'タスクが近づくと教えてくれたり、褒めてくれます。',　src:'https://drive.google.com/uc?export=view&id=1dq2A4l53agWXiTFJxnKdeD6O4bQ20ICr',},
+  { color: '#41BFDD', title: 'Calendar',　artist: 'ガントチャートを組み合わせたカレンダー',　src:'https://drive.google.com/uc?export=view&id=1M301zAIBSYzs7B7TD9Hk_jtMucaCaJ4-',},
+  { color: '#FFB100', title: 'Bot',　artist: 'タスクが近づくと教えてくれたり、褒めてくれます。',　src:'https://drive.google.com/uc?export=view&id=1dq2A4l53agWXiTFJxnKdeD6O4bQ20ICr',},
 ],
 item2: [
-  { rink:'/Activity' ,color: '#FC785F', title: 'Activity',　artist: '活動の記録が見れます',　src:'https://drive.google.com/uc?export=view&id=1fV-iYiVnrml6AOGlvAe6iBdMu5z4d_Ot',},
-  { rink:'/Gallery' ,color: '#9DBE31', title: 'Gallery',　artist: '運営の趣味です',　src:'https://drive.google.com/uc?export=view&id=1HJD52I4U27uXASqCxsfl-I-jOl4l7vhM',},
+  { color: '#FC785F', title: 'Activity',　artist: '活動の記録が見れます',　src:'https://drive.google.com/uc?export=view&id=1fV-iYiVnrml6AOGlvAe6iBdMu5z4d_Ot',},
+  { color: '#9DBE31', title: 'Gallery',　artist: '運営の趣味です',　src:'https://drive.google.com/uc?export=view&id=1HJD52I4U27uXASqCxsfl-I-jOl4l7vhM',},
 ],
+
+   tab: null,
+      items: [
+        'Appetizers', 'Entrees', 'Deserts', 'Cocktails',
+      ],
   }),
 };
 </script>
 
 <style scoped>
+
 @media screen and (min-width: 500px) {
   .project-select  {
     height:100%;

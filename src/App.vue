@@ -3,7 +3,9 @@
     <SignedHeader v-if="this.$store.state.signed"/>
     <Header v-else/>
     <v-content>
-      <router-view/>
+      <transition name="page">
+        <router-view/>
+      </transition>
     </v-content>
   </v-app>
 </template>

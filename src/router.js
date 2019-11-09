@@ -1,6 +1,11 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Login from './views/Login.vue'
+import Home from './views/Home.vue'
+import Calendar from './views/Calendar.vue'
+import Bot from './views/Bot.vue'
+import Activity from './views/Activity.vue'
+import Gallery from './views/Gallery.vue'
 //あたらしいるーとをかく
 Vue.use(Router)
 
@@ -14,12 +19,30 @@ export default new Router({
       component: Login
     },
     {
-      path: '/about',
-      name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
-    }
+      path: '/Home',
+      name: 'Home',
+      component: Home
+    },
+    {
+      path: '/Bot',
+      name: 'Bot',
+      component: Bot
+    },
+    {
+      path: '/Calendar',
+      name: 'Calendar',
+      component: Calendar
+    },
+    {
+      path: '/Activity',
+      name: 'Activity',
+      component: Activity
+    },
+    {
+      path: '/Gallery',
+      name: 'Gallery',
+      component: Gallery
+    },
+
   ]
 })
