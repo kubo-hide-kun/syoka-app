@@ -1,6 +1,11 @@
 <template>
   <div class="demo-app">
     <div class="demo-app-top">
+      <div class="my-4">
+        <v-btn color="success" x-large>
+          <b>タスクの新規作成</b>
+        </v-btn>
+      </div>
       <v-bottom-navigation :value="isGanttChart" color="deep-purple accent-4">
         <v-btn @click="isGanttChart = 0">
           <span>Calendar</span>
@@ -109,14 +114,14 @@ export default {
 <style>
 .demo-app {
   font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
-  font-size: 14px;
+  font-size: 1rem;
 }
 
 .demo-app-top {
-  margin: 30px;
+  margin: 0 60px;
 }
 
 .demo-app-calendar {
-  margin: 30px;
+  margin: 60px;
 }
 </style>
