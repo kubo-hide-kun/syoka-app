@@ -13,12 +13,12 @@
     <v-list rounded>
       <v-list-item-group v-model="project">
         <v-list-item v-for="(project, i) in projects" :key="i">
-          <v-list-item-content>
+          <v-list-item-content @click="choiceProjects(project)">
             <v-list-item-title v-text="project.title" />
           </v-list-item-content>
           <v-list-item-icon>
-            <v-icon 
-              v-text="project.isFire ? 'mdi-fire':''" 
+            <v-icon
+              v-text="project.isFire ? 'mdi-fire':''"
               :color="projects.isFire ? '':'orange darken-3'"
             />
           </v-list-item-icon>
@@ -39,6 +39,11 @@ export default {
         { title: "D-projects", isFire: true }
       ]
     };
+  },
+  methods: {
+    choiceProjects(project) {
+      console.log(project.title);
+    }
   }
 };
 </script>
