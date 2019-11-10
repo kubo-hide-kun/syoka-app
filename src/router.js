@@ -19,27 +19,27 @@ export default new Router({
       component: Login
     },
     {
-      path: '/Home',
+      path: '/home',
       name: 'Home',
       component: Home
     },
     {
-      path: '/Bot',
+      path: '/bot',
       name: 'Bot',
       component: Bot
     },
     {
-      path: '/Calendar',
+      path: '/calendar',
       name: 'Calendar',
       component: Calendar
     },
     {
-      path: '/Activity',
+      path: '/activity',
       name: 'Activity',
       component: Activity
     },
     {
-      path: '/Gallery',
+      path: '/gallery',
       name: 'Gallery',
       component: Gallery
     },

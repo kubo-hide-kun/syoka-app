@@ -4,7 +4,7 @@
       <img
         src="https://pbs.twimg.com/profile_images/1064010537665609728/4oTOHpow_400x400.jpg"
         alt="icon"
-      >
+      />
     </v-avatar>
     <div class="searchForm">
       <v-autocomplete
@@ -23,7 +23,7 @@
     </div>
 
     <v-spacer></v-spacer>
-    
+
     <v-btn text target="_blank" @click="transitionPage('home')">
       <span class="mr-2">ホーム</span>
     </v-btn>
@@ -38,22 +38,13 @@
     </v-btn>
     <v-menu offset-y>
       <template v-slot:activator="{ on }">
-        <v-btn
-          text
-          v-on="on"
-        >
+        <v-btn text v-on="on">
           <span class="mr-2">もっと見る</span>
         </v-btn>
       </template>
       <v-list>
-         <v-list-item
-          v-for="(page, index) in pages"
-          :key="index"
-          @click="transitionPage(page.link)"
-        >
-          <v-list-item-title>
-            {{ page.title }}
-          </v-list-item-title>
+        <v-list-item v-for="(page, index) in pages" :key="index" @click="transitionPage(page.link)">
+          <v-list-item-title>{{ page.title }}</v-list-item-title>
         </v-list-item>
       </v-list>
     </v-menu>
@@ -61,43 +52,42 @@
       <img
         src="https://pbs.twimg.com/profile_images/1064010537665609728/4oTOHpow_400x400.jpg"
         alt="icon"
-      >
+      />
     </v-avatar>
   </v-app-bar>
 </template>
 
 <script>
 export default {
-  name: 'Header',
-  components: {
-  },
-  data () {
+  name: "Header",
+  components: {},
+  data() {
     return {
       loading: false,
       items: [],
       search: null,
       select: null,
       states: [
-        'ホーム / home',
-        'ログイン / signin',
-        '登録 / signup',
-        '特徴 / feature',
-        '機能 / contents',
-        'ご利用の流れ / usage',
-        'お問い合わせ / contact',
+        "ホーム / home",
+        "ログイン / signin",
+        "登録 / signup",
+        "特徴 / feature",
+        "機能 / contents",
+        "ご利用の流れ / usage",
+        "お問い合わせ / contact"
       ],
       pages: [
-        { title: 'アナリティクス', link: 'analytics'},
-        { title: '設定', link: 'config'},
-        { title: 'お問い合わせ', link: 'contact'},
-        { title: 'ログアウト', link: 'logout'},
-      ],
-    }
+        { title: "アナリティクス", link: "analytics" },
+        { title: "設定", link: "config" },
+        { title: "お問い合わせ", link: "contact" },
+        { title: "ログアウト", link: "logout" }
+      ]
+    };
   },
   watch: {
-    search (val) {
-      val && val !== this.select && this.querySelections(val)
-    },
+    search(val) {
+      val && val !== this.select && this.querySelections(val);
+    }
   },
   mounted() {
     setInterval(() => {
@@ -105,26 +95,26 @@ export default {
     }, 500);
   },
   methods: {
-    transitionPage: function(page){
-      if(page==='logout')this.$store.state.signed =  false;
+    transitionPage: function(page) {
+      if (page === "logout") this.$store.state.signed = false;
       else alert("該当ページは存在しません / " + page);
     },
-    querySelections:  function(v) {
-      this.loading = true
+    querySelections: function(v) {
+      this.loading = true;
       // Simulated ajax query
       setTimeout(() => {
         this.items = this.states.filter(e => {
-          return (e || '').toLowerCase().indexOf((v || '').toLowerCase()) > -1
-        })
-        this.loading = false
-      }, 500)
-    },
-  },
+          return (e || "").toLowerCase().indexOf((v || "").toLowerCase()) > -1;
+        });
+        this.loading = false;
+      }, 500);
+    }
+  }
 };
 </script>
 
 <style scoped>
 .searchForm {
-  max-width: 300px; 
+  max-width: 300px;
 }
 </style>
