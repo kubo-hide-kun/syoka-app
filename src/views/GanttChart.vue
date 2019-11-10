@@ -1,21 +1,39 @@
 <template>
   <div class="demo-app">
-    <div class="demo-app-top">
-      <div class="my-4">
-        <v-btn color="success" x-large>
-          <b>タスクの新規作成</b>
-        </v-btn>
+    <div>
+      <div class="demo-app-top">
+        <v-row>
+          <v-dialog v-model="dialog" persistent max-width="60%">
+            <template v-slot:activator="{ on }">
+              <div class="my-4">
+                <v-btn color="success" x-large v-on="on">
+                  <b>タスクの新規作成</b>
+                </v-btn>
+              </div>
+            </template>
+            <v-card>
+              <v-card-title class="headline">Use Google's location service?</v-card-title>
+              <v-card-text>Let Google help apps determine location. This means sending anonymous location data to Google, even when no apps are running.</v-card-text>
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn color="green darken-1" text @click="dialog = false">Disagree</v-btn>
+                <v-btn color="green darken-1" text @click="dialog = false">Agree</v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
+        </v-row>
+
+        <v-bottom-navigation :value="isGanttChart" color="deep-purple accent-4">
+          <v-btn @click="isGanttChart = 0">
+            <span>Calendar</span>
+            <v-icon>mdi- mdi-calendar</v-icon>
+          </v-btn>
+          <v-btn @click="isGanttChart = 1">
+            <span>GanttChart</span>
+            <v-icon>mdi-chart-histogram</v-icon>
+          </v-btn>
+        </v-bottom-navigation>
       </div>
-      <v-bottom-navigation :value="isGanttChart" color="deep-purple accent-4">
-        <v-btn @click="isGanttChart = 0">
-          <span>Calendar</span>
-          <v-icon>mdi- mdi-calendar</v-icon>
-        </v-btn>
-        <v-btn @click="isGanttChart = 1">
-          <span>GanttChart</span>
-          <v-icon>mdi-chart-histogram</v-icon>
-        </v-btn>
-      </v-bottom-navigation>
     </div>
 
     <FullCalendar
@@ -78,6 +96,7 @@ export default {
   },
   data: function() {
     return {
+      dialog: false,
       isGanttChart: 0,
       isMobileView: false,
       calendarPlugins: [
