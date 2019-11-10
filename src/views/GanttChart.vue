@@ -1,10 +1,10 @@
 <template>
   <div class="demo-app">
-    <div class="demo-app-top">
+    <!-- <div class="demo-app-top">
       <button @click="toggleWeekends">toggle weekends</button>
       <button @click="gotoPast">go to a date in the past</button>
       (also, click a date/time to add an event)
-    </div>
+    </div>-->
     <FullCalendar
       class="demo-app-calendar"
       ref="fullCalendar"
@@ -33,7 +33,6 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import resourceTimelinePlugin from "@fullcalendar/resource-timeline";
 import interactionPlugin from "@fullcalendar/interaction";
-//<div class="fc-view fc-resourceTimelineDay-view fc-timeline fc-flat">
 
 // must manually include stylesheets for each plugin
 import "@fullcalendar/core/main.css";
@@ -59,16 +58,16 @@ export default {
       ],
       calendarWeekends: true,
       calendarResources: [
-        { title: 'resource a', id: 'a' },
-        { title: 'resource b', id: 'b' },
+        { title: "resource a", id: "a" },
+        { title: "resource b", id: "b" }
       ],
       calendarEvents: [
-        // initial event data
-        { 
+        // initial event mock data
+        {
           title: "Event Now",
-          start: new Date('November 9, 2019 9:00:00'),
-          end: new Date('November 9, 2019 18:00:00'),
-          resourceId: 'a'
+          start: new Date("November 9, 2019 9:00:00"),
+          end: new Date("November 9, 2019 18:00:00"),
+          resourceId: "a"
         }
       ]
     };
@@ -99,7 +98,6 @@ export default {
 }
 
 .demo-app-calendar {
-  margin: 0 auto;
-  max-width: 900px;
+  margin: 30px;
 }
 </style>
