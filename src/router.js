@@ -1,7 +1,13 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Login from './views/Login.vue'
-//あたらしいるーとをかく
+import Home from './views/Home.vue'
+import Calendar from './views/Calendar.vue'
+import Bot from './views/Bot.vue'
+import Activity from './views/Activity.vue'
+import Gallery from './views/Gallery.vue'
+import GanttChart from './views/GanttChart'
+
 Vue.use(Router)
 
 export default new Router({
@@ -10,24 +16,39 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'Login',
+      name: 'login',
       component: Login
     },
     {
-      path: '/about',
-      name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
+      path: '/home',
+      name: 'home',
+      component: Home
+    },
+    {
+      path: '/bot',
+      name: 'bot',
+      component: Bot
+    },
+    {
+      path: '/calendar',
+      name: 'calendar',
+      component: Calendar
+    },
+    {
+      path: '/activity',
+      name: 'activity',
+      component: Activity
+    },
+    {
+      path: '/gallery',
+      name: 'gallery',
+      component: Gallery
     },
     {
       path: '/gantt-chart',
       name: 'gantt-chart',
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */ './components/GanttChart.vue')
+      component: GanttChart
     }
+
   ]
 })

@@ -1,24 +1,27 @@
 <template>
   <v-app>
-    <Header />
+    <SignedHeader v-if="this.$store.state.signed" />
+    <Header v-else />
     <v-content>
-      <router-view/>
+      <transition name="page">
+        <router-view />
+      </transition>
     </v-content>
   </v-app>
 </template>
 
 <script>
-// import Login from './views/Login.vue';
-import Header from './components/Header';
+import Header from "./components/Header";
+import SignedHeader from "./components/signedHeader";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    // Login,
-    Header
+    Header,
+    SignedHeader
   },
   data: () => ({
     //
-  }),
+  })
 };
 </script>
