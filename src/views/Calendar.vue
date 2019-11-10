@@ -5,12 +5,7 @@
         <v-layout row wrap>
           <!--プロジェクト選択と追加-->
           <v-flex xs12 sm3 md3 order-md1 order-sm1>
-            <v-card dark tile flat color="grey darken-2" class="project-select">
-              <v-card-text>
-                ＃プロジェクト名
-                <br />＃プロジェクト名
-              </v-card-text>
-            </v-card>
+            <ProjectList />
           </v-flex>
 
           <!--メインコンテンツ-->
@@ -89,7 +84,12 @@
 </template>
 
 <script>
+import ProjectList from '../components/ProjectList';
+
 export default {
+  components: {
+    ProjectList
+  },
   data: () => ({
     item: [
       {
