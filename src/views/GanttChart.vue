@@ -1,22 +1,29 @@
 <template>
   <div class="demo-app">
-    <!-- <div class="demo-app-top">
-      <button @click="toggleWeekends">toggle weekends</button>
-      <button @click="gotoPast">go to a date in the past</button>
-      (also, click a date/time to add an event)
-    </div>-->
+    <div class="demo-app-top">
+      <v-bottom-navigation :value="isGanttChart" color="deep-purple accent-4">
+        <v-btn @click="isGanttChart = 0">
+          <span>Calendar</span>
+          <v-icon>mdi- mdi-calendar</v-icon>
+        </v-btn>
+        <v-btn @click="isGanttChart = 1">
+          <span>GanttChart</span>
+          <v-icon>mdi-chart-histogram</v-icon>
+        </v-btn>
+      </v-bottom-navigation>
+    </div>
+
     <FullCalendar
+      v-if="isGanttChart"
       class="demo-app-calendar"
-      ref="fullCalendar"
-      defaultView="resourceTimelineDay"
+      ref="fullGanttChart"
+      defaultView="resourceTimelineMonth"
       :header="{
         left: 'prev,next today',
         center: isMobileView 
           ? ''
           : 'title',
-        right: isGanttChart 
-          ? 'resourceTimelineDay,resourceTimelineWeek,resourceTimelineMonth'
-          : 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+        right: 'resourceTimelineDay,resourceTimelineWeek,resourceTimelineMonth'
       }"
       :plugins="calendarPlugins"
       :weekends="calendarWeekends"
@@ -24,6 +31,25 @@
       :resources="calendarResources"
       @eventClick="handleEventClick"
     />
+    <div v-else>
+      <FullCalendar
+        class="demo-app-calendar"
+        ref="fullCalendar"
+        defaultView="dayGridMonth"
+        :header="{
+        left: 'prev,next today',
+        center: isMobileView 
+          ? ''
+          : 'title',
+        right: 'timeGridDay,timeGridWeek,listWeek,dayGridMonth'
+      }"
+        :plugins="calendarPlugins"
+        :weekends="calendarWeekends"
+        :events="calendarEvents"
+        :resources="calendarResources"
+        @eventClick="handleEventClick"
+      />
+    </div>
   </div>
 </template>
 
@@ -47,8 +73,8 @@ export default {
   },
   data: function() {
     return {
-      isGanttChart: true,
-      isMobileView: true,
+      isGanttChart: 0,
+      isMobileView: false,
       calendarPlugins: [
         // plugins must be defined in the JS
         dayGridPlugin,
@@ -73,13 +99,6 @@ export default {
     };
   },
   methods: {
-    toggleWeekends() {
-      this.calendarWeekends = !this.calendarWeekends; // update a property
-    },
-    gotoPast() {
-      let calendarApi = this.$refs.fullCalendar.getApi(); // from the ref="..."
-      calendarApi.gotoDate("2000-01-01"); // call a method on the Calendar object
-    },
     handleEventClick(arg) {
       console.log(arg);
     }
@@ -94,7 +113,7 @@ export default {
 }
 
 .demo-app-top {
-  margin: 0 0 3em;
+  margin: 30px;
 }
 
 .demo-app-calendar {
