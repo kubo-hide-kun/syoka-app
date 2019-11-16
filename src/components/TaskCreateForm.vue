@@ -14,11 +14,49 @@
             <v-card-title class="headline">新規作成</v-card-title>
             <v-text-field v-model="title" label="イベント名" outlined></v-text-field>
             <p>・詳細(MarkDown対応)</p>
-            <v-card elevation=2>
+            <v-card elevation="2">
               <mavon-editor v-model="description" language="ja" ref="md" />
             </v-card>
+            <v-row>
+              <v-col cols="12" lg="6">
+                <v-dialog
+                  ref="dialog2"
+                  v-model="endDay"
+                  :return-value.sync="limitDate"
+                  persistent
+                  width="290px"
+                >
+                  <template v-slot:activator="{ on }">
+                    <v-text-field v-model="limitDate" label="終了日" readonly v-on="on"></v-text-field>
+                  </template>
+                  <v-date-picker v-model="limitDate" scrollable>
+                    <v-spacer />
+                    <v-btn text color="primary" @click="endDay = false">Cancel</v-btn>
+                    <v-btn text color="primary" @click="$refs.dialog2.save(limitDate)">OK</v-btn>
+                  </v-date-picker>
+                </v-dialog>
+              </v-col>
+              <v-col cols="12" lg="6">
+                <v-dialog
+                  ref="dialog4"
+                  v-model="endTime"
+                  :return-value.sync="limitTime"
+                  persistent
+                  width="290px"
+                >
+                  <template v-slot:activator="{ on }">
+                    <v-text-field v-model="limitTime" label="終了時刻" readonly v-on="on"></v-text-field>
+                  </template>
+                  <v-time-picker v-if="endTime" v-model="limitTime" full-width>
+                    <v-spacer />
+                    <v-btn text color="primary" @click="endTime = false">Cancel</v-btn>
+                    <v-btn text color="primary" @click="$refs.dialog4.save(limitTime)">OK</v-btn>
+                  </v-time-picker>
+                </v-dialog>
+              </v-col>
+            </v-row>
             <v-card-actions>
-              <v-spacer></v-spacer>
+              <v-spacer />
               <v-btn color="green darken-1" text @click="dialog = false">Disagree</v-btn>
               <v-btn color="green darken-1" text @click="dialog = false">Agree</v-btn>
             </v-card-actions>
@@ -41,7 +79,11 @@ export default {
       dialog: false,
 
       title: "",
-      description: ""
+      description: "",
+      limitDate: new Date().toISOString().substr(0, 10),
+      limitTime: null,
+      endDay: false,
+      endTime: false
     };
   }
 };

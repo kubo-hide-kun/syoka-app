@@ -80,7 +80,7 @@
 </template>
 
 <script>
-import ProjectList from '../components/ProjectList';
+import ProjectList from "../components/ProjectList";
 
 export default {
   components: {
