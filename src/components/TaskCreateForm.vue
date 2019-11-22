@@ -67,11 +67,7 @@
             </div>
             <div class="chip-list">
               <div v-for="(tag,key) in tags" :key="key" class="tag-chips">
-                <v-chip
-                  class="ma-1"
-                  small
-                  close
-                >{{tag}}</v-chip>
+                <v-chip class="ma-1" small close @click:close="removeTag(tag)">{{tag}}</v-chip>
               </div>
             </div>
             <v-card-actions>
@@ -105,12 +101,16 @@ export default {
       tags: []
     };
   },
-  methods :{
+  methods: {
     addTag() {
       if (!this.inputTag) return;
       this.tags.push(this.inputTag);
       this.inputTag = "";
     },
+    removeTag(item) {
+      this.tags.splice(this.tags.indexOf(item), 1);
+      this.tags = [...this.tags];
+    }
   }
 };
 </script>
