@@ -55,6 +55,25 @@
                 </v-dialog>
               </v-col>
             </v-row>
+            <div>
+              <tr>
+                <td width="70%">
+                  <v-text-field v-model="inputTag" label="追加するタグ" outlined></v-text-field>
+                </td>
+                <td width="10%">
+                  <v-btn color="blue" dark class="ma-1" @click="addTag">タグ追加</v-btn>
+                </td>
+              </tr>
+            </div>
+            <div class="chip-list">
+              <div v-for="(tag,key) in tags" :key="key" class="tag-chips">
+                <v-chip
+                  class="ma-1"
+                  small
+                  close
+                >{{tag}}</v-chip>
+              </div>
+            </div>
             <v-card-actions>
               <v-spacer />
               <v-btn color="green darken-1" text @click="dialog = false">Disagree</v-btn>
@@ -77,14 +96,21 @@ export default {
   data() {
     return {
       dialog: false,
-
       title: "",
       description: "",
       limitDate: new Date().toISOString().substr(0, 10),
       limitTime: null,
       endDay: false,
-      endTime: false
+      endTime: false,
+      tags: []
     };
+  },
+  methods :{
+    addTag() {
+      if (!this.inputTag) return;
+      this.tags.push(this.inputTag);
+      this.inputTag = "";
+    },
   }
 };
 </script>
