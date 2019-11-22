@@ -114,3 +114,10 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.chip-list {
+  display: flex;
+  flex-wrap: wrap;
+}
+</style>
