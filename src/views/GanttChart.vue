@@ -15,7 +15,6 @@
         </v-bottom-navigation>
       </div>
     </div>
-
     <FullCalendar
       v-if="isGanttChart"
       class="demo-app-calendar"
@@ -51,6 +50,7 @@
         :events="calendarEvents"
         :resources="calendarResources"
         @eventClick="handleEventClick"
+        @eventMouseEnter="handleEventMouseEnter"
       />
     </div>
   </div>
@@ -96,17 +96,45 @@ export default {
       calendarEvents: [
         // initial event mock data
         {
+          id: "0i0",
           title: "Event Now",
+          discription: "sample text",
           start: new Date("November 9, 2019 9:00:00"),
           end: new Date("November 9, 2019 18:00:00"),
-          resourceId: "a"
+          resourceIds: ["窪田"],
+          tags: ["js","Markdown"]
+        },
+        // initial event mock data
+        {
+          id: "sdkjb",
+          discription: "default text",
+          title: "Event Now2",
+          start: new Date("November 9, 2019 9:00:00"),
+          end: new Date("November 9, 2019 18:00:00"),
+          resourceIds: ["窪田", "鳥越"],
+          tags: ["Python"]
         }
       ]
     };
   },
   methods: {
     handleEventClick(arg) {
-      console.log(arg);
+      console.log(arg.event.id);
+      console.log(arg.event.title);
+      console.log(this.calendarEvents.filter(event => event.id == arg.event.id)[0].discription)
+      console.log(arg.event.start);
+      console.log(arg.event.end);
+      console.log(...arg.event._def.resourceIds);
+      console.log(...this.calendarEvents.filter(event => event.id == arg.event.id)[0].tags)
+    },
+    handleEventMouseEnter(arg) {
+      console.log(arg.event.id);
+      console.log(arg.event.title);
+      console.log(this.calendarEvents.filter(event => event.id == arg.event.id)[0].discription)
+      console.log(arg.event.start);
+      console.log(arg.event.end);
+      console.log(...arg.event._def.resourceIds);
+      console.log(...this.calendarEvents.filter(event => event.id == arg.event.id)[0].tags)
     }
   }
 };
