@@ -53,6 +53,77 @@
         @eventMouseEnter="handleEventMouseEnter"
       />
     </div>
+
+    <v-dialog v-model="dialog" persistent max-width="60%">
+      <v-card>
+        <div class="ma-6">
+          <v-card-title class="headline">新規作成</v-card-title>
+          <v-text-field v-model="title" label="イベント名" outlined></v-text-field>
+          <p>・詳細(MarkDown対応)</p>
+          <v-card elevation="2">
+            <mavon-editor v-model="description" language="ja" ref="md" />
+          </v-card>
+          <v-row>
+            <v-col cols="12" lg="6">
+              <v-dialog
+                ref="dialog2"
+                v-model="endDay"
+                :return-value.sync="limitDate"
+                persistent
+                width="290px"
+              >
+                <template v-slot:activator="{ on }">
+                  <v-text-field v-model="limitDate" label="終了日" readonly v-on="on"></v-text-field>
+                </template>
+                <v-date-picker v-model="limitDate" scrollable>
+                  <v-spacer />
+                  <v-btn text color="primary" @click="endDay = false">Cancel</v-btn>
+                  <v-btn text color="primary" @click="$refs.dialog2.save(limitDate)">OK</v-btn>
+                </v-date-picker>
+              </v-dialog>
+            </v-col>
+            <v-col cols="12" lg="6">
+              <v-dialog
+                ref="dialog4"
+                v-model="endTime"
+                :return-value.sync="limitTime"
+                persistent
+                width="290px"
+              >
+                <template v-slot:activator="{ on }">
+                  <v-text-field v-model="limitTime" label="終了時刻" readonly v-on="on"></v-text-field>
+                </template>
+                <v-time-picker v-if="endTime" v-model="limitTime" full-width>
+                  <v-spacer />
+                  <v-btn text color="primary" @click="endTime = false">Cancel</v-btn>
+                  <v-btn text color="primary" @click="$refs.dialog4.save(limitTime)">OK</v-btn>
+                </v-time-picker>
+              </v-dialog>
+            </v-col>
+          </v-row>
+          <div>
+            <tr>
+              <td width="70%">
+                <v-text-field v-model="inputTag" label="追加するタグ" outlined></v-text-field>
+              </td>
+              <td width="10%">
+                <v-btn color="blue" dark class="ma-1" @click="addTag">タグ追加</v-btn>
+              </td>
+            </tr>
+          </div>
+          <div class="chip-list">
+            <div v-for="(tag,key) in tags" :key="key" class="tag-chips">
+              <v-chip class="ma-1" small close @click:close="removeTag(tag)">{{tag}}</v-chip>
+            </div>
+          </div>
+          <v-card-actions>
+            <v-spacer />
+            <v-btn color="green darken-1" text @click="post">Disagree</v-btn>
+            <v-btn color="green darken-1" text @click="post">Agree</v-btn>
+          </v-card-actions>
+        </div>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
@@ -79,6 +150,14 @@ export default {
   },
   data: function() {
     return {
+      dialog: false,
+      title: "",
+      description: "",
+      limitDate: null,
+      limitTime: null,
+      endDay: false,
+      endTime: false,
+      tags: [],
       isGanttChart: 0,
       isMobileView: false,
       calendarPlugins: [
@@ -100,17 +179,17 @@ export default {
           title: "Event Now",
           discription: "sample text",
           start: new Date("November 9, 2019 9:00:00"),
-          end: new Date("November 9, 2019 18:00:00"),
+          end: new Date("November 9, 2019 18:08:00"),
           resourceIds: ["窪田"],
-          tags: ["js","Markdown"]
+          tags: ["js", "Markdown"]
         },
         // initial event mock data
         {
           id: "sdkjb",
           discription: "default text",
           title: "Event Now2",
-          start: new Date("November 9, 2019 9:00:00"),
-          end: new Date("November 9, 2019 18:00:00"),
+          start: new Date("October 9, 2019 9:00:00"),
+          end: new Date("October 9, 2019 18:09:00"),
           resourceIds: ["窪田", "鳥越"],
           tags: ["Python"]
         }
@@ -119,22 +198,22 @@ export default {
   },
   methods: {
     handleEventClick(arg) {
-      console.log(arg.event.id);
-      console.log(arg.event.title);
-      console.log(this.calendarEvents.filter(event => event.id == arg.event.id)[0].discription)
-      console.log(arg.event.start);
-      console.log(arg.event.end);
-      console.log(...arg.event._def.resourceIds);
-      console.log(...this.calendarEvents.filter(event => event.id == arg.event.id)[0].tags)
+      this.title = arg.event.title;
+      this.description = this.calendarEvents
+        .filter(event => event.id == arg.event.id)[0]
+        .discription;
+      this.tags = this.calendarEvents.filter(event => event.id == arg.event.id)[0].tags;
+      this.limitDate = 
+        arg.event.end.getFullYear() + "-" +
+        (1+arg.event.end.getMonth()) + "-" +
+        arg.event.end.getDate();
+      this.limitTime =
+        arg.event.end.getHours() + ":" +
+        ('00'+arg.event.end.getMinutes()).slice(-2);
+      this.dialog = true;
     },
-    handleEventMouseEnter(arg) {
-      console.log(arg.event.id);
-      console.log(arg.event.title);
-      console.log(this.calendarEvents.filter(event => event.id == arg.event.id)[0].discription)
-      console.log(arg.event.start);
-      console.log(arg.event.end);
-      console.log(...arg.event._def.resourceIds);
-      console.log(...this.calendarEvents.filter(event => event.id == arg.event.id)[0].tags)
+    post() {
+      this.dialog = false;
     }
   }
 };
