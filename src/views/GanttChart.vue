@@ -151,13 +151,17 @@ export default {
   data: function() {
     return {
       dialog: false,
+      id: "",
       title: "",
       description: "",
+      start: null,
+      end: null,
+      resourceIds: [],
+      tags: [],
       limitDate: null,
       limitTime: null,
       endDay: false,
       endTime: false,
-      tags: [],
       isGanttChart: 0,
       isMobileView: false,
       calendarPlugins: [
@@ -198,11 +202,16 @@ export default {
   },
   methods: {
     handleEventClick(arg) {
+      this.id = arg.event.id;
       this.title = arg.event.title;
       this.description = this.calendarEvents
         .filter(event => event.id == arg.event.id)[0]
         .discription;
+      this.start = arg.event.start;
+      this.end = arg.event.end;
+      this.resourceIds = arg.event._def.resourceIds;
       this.tags = this.calendarEvents.filter(event => event.id == arg.event.id)[0].tags;
+
       this.limitDate = 
         arg.event.end.getFullYear() + "-" +
         (1+arg.event.end.getMonth()) + "-" +
@@ -214,6 +223,16 @@ export default {
     },
     post() {
       this.dialog = false;
+      const postDatas = {
+        id: this.id,
+        title: this.title,
+        description: this.description,
+        start: this.start,
+        end: this.end,
+        resourceIds: this.resourceIds,
+        tags: this.tags
+      };
+      console.log(postDatas);
     }
   }
 };
