@@ -73,7 +73,7 @@
             <v-card-actions>
               <v-spacer />
               <v-btn color="green darken-1" text @click="dialog = false">Disagree</v-btn>
-              <v-btn color="green darken-1" text @click="dialog = false">Agree</v-btn>
+              <v-btn color="green darken-1" text @click="post">Agree</v-btn>
             </v-card-actions>
           </div>
         </v-card>
@@ -98,6 +98,7 @@ export default {
       limitTime: null,
       endDay: false,
       endTime: false,
+      resourceIds: [],
       tags: []
     };
   },
@@ -110,6 +111,19 @@ export default {
     removeTag(item) {
       this.tags.splice(this.tags.indexOf(item), 1);
       this.tags = [...this.tags];
+    },
+    post() {
+      this.dialog = false;
+      const postDatas = {
+        id: this.title+this.end,
+        title: this.title,
+        description: this.description,
+        start: new Date(),
+        end: new Date(this.limitDate+" "+this.limitTime),
+        resourceIds: this.resourceIds,
+        tags: this.tags
+      };
+      console.log(postDatas);
     }
   }
 };
