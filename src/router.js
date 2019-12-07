@@ -6,7 +6,8 @@ import Calendar from './views/Calendar.vue'
 import Bot from './views/Bot.vue'
 import Activity from './views/Activity.vue'
 import Gallery from './views/Gallery.vue'
-//あたらしいるーとをかく
+import GanttChart from './views/GanttChart'
+
 Vue.use(Router)
 
 export default new Router({
@@ -15,34 +16,39 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'Login',
+      name: 'login',
       component: Login
     },
     {
       path: '/home',
-      name: 'Home',
+      name: 'home',
       component: Home
     },
     {
       path: '/bot',
-      name: 'Bot',
+      name: 'bot',
       component: Bot
     },
     {
       path: '/calendar',
-      name: 'Calendar',
+      name: 'calendar',
       component: Calendar
     },
     {
       path: '/activity',
-      name: 'Activity',
+      name: 'activity',
       component: Activity
     },
     {
       path: '/gallery',
-      name: 'Gallery',
+      name: 'gallery',
       component: Gallery
     },
+    {
+      path: '/gantt-chart',
+      name: 'gantt-chart',
+      component: GanttChart
+    }
 
   ]
 })

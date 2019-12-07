@@ -6,7 +6,9 @@
           <p class="display-1 text--bold-white">Projects</p>
         </v-col>
         <v-col cols="6" md="4">
-          <v-btn color="green darken-1" class="center">新規作成</v-btn>
+          <v-btn color="green darken-1" class="center" large>
+            <b>新規作成</b>
+          </v-btn>
         </v-col>
       </v-row>
     </v-card-text>

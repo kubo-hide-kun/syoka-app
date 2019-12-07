@@ -4,7 +4,7 @@
       <img
         src="https://pbs.twimg.com/profile_images/1064010537665609728/4oTOHpow_400x400.jpg"
         alt="icon"
-      >
+      />
     </v-avatar>
     <v-toolbar-title class="headline">
       <span>ShoKa Manager</span>
@@ -26,7 +26,7 @@
 
     <div class="searchForm">
       <v-autocomplete
-          v-model="select"
+        v-model="select"
         :loading="loading"
         :items="items"
         :search-input.sync="search"
@@ -43,56 +43,55 @@
 
 <script>
 export default {
-  name: 'Header',
-  components: {
-  },
-  data () {
+  name: "Header",
+  components: {},
+  data() {
     return {
       loading: false,
       items: [],
       search: null,
       select: null,
       states: [
-        'ホーム / home',
-        'ログイン / signin',
-        '登録 / signup',
-        '特徴 / feature',
-        '機能 / contents',
-        'ご利用の流れ / usage',
-        'お問い合わせ / contact',
-      ],
-    }
+        "ホーム / home",
+        "ログイン / signin",
+        "登録 / signup",
+        "特徴 / feature",
+        "機能 / contents",
+        "ご利用の流れ / usage",
+        "お問い合わせ / contact"
+      ]
+    };
   },
   watch: {
-    search (val) {
-      val && val !== this.select && this.querySelections(val)
-    },
+    search(val) {
+      val && val !== this.select && this.querySelections(val);
+    }
   },
   mounted() {
     setInterval(() => {
-     // console.log(this.select);
+      // console.log(this.select);
     }, 500);
   },
   methods: {
-    querySelections:  function(v) {
-      this.loading = true
+    querySelections: function(v) {
+      this.loading = true;
       // Simulated ajax query
       setTimeout(() => {
         this.items = this.states.filter(e => {
-          return (e || '').toLowerCase().indexOf((v || '').toLowerCase()) > -1
-        })
-        this.loading = false
-      }, 500)
-    },
-  },
+          return (e || "").toLowerCase().indexOf((v || "").toLowerCase()) > -1;
+        });
+        this.loading = false;
+      }, 500);
+    }
+  }
 };
 </script>
 
 <style scoped>
 .headline {
-  margin: 0 20px; 
+  margin: 0 20px;
 }
 .searchForm {
-  width: 425px; 
+  width: 425px;
 }
 </style>
