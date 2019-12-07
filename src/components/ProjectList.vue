@@ -7,7 +7,7 @@
         </v-col>
         <v-col cols="6" md="4">
           <v-btn color="green darken-1" class="center" large>
-          <b>新規作成</b>
+            <b>新規作成</b>
           </v-btn>
         </v-col>
       </v-row>
