@@ -55,7 +55,7 @@
     </div>
 
     <v-dialog v-model="dialog" persistent max-width="60%">
-      <v-card>
+      <v-card  v-if="true">
         <div class="ma-6">
           <v-card-title class="headline">新規作成</v-card-title>
           <v-text-field v-model="title" label="イベント名" outlined></v-text-field>
