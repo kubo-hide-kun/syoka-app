@@ -1,15 +1,18 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Login from './views/Login.vue'
-import Home from './views/Home.vue'
-import Calendar from './views/Calendar.vue'
-import Bot from './views/Bot.vue'
+
+
 import Activity from './views/Activity.vue'
-import Gallery from './views/Gallery.vue'
+import Bot from './views/Bot'
+import Gallery from './views/Gallery'
 //あたらしいるーとをかく
 Vue.use(Router)
 
 export default new Router({
+
+
+
   mode: 'history',
   base: process.env.BASE_URL,
   routes: [
@@ -18,10 +21,11 @@ export default new Router({
       name: 'Login',
       component: Login
     },
+
     {
-      path: '/home',
-      name: 'Home',
-      component: Home
+      path: '/activity',
+      name: 'Activity',
+      component: Activity
     },
     {
       path: '/bot',
@@ -29,20 +33,9 @@ export default new Router({
       component: Bot
     },
     {
-      path: '/calendar',
-      name: 'Calendar',
-      component: Calendar
-    },
-    {
-      path: '/activity',
-      name: 'Activity',
-      component: Activity
-    },
-    {
-      path: '/gallery',
+      path: '/Gallery',
       name: 'Gallery',
       component: Gallery
     },
-
   ]
 })

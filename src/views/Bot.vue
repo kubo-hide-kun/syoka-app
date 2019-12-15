@@ -1,92 +1,163 @@
 <template>
-  <v-app>
     <v-layout column align-start>
       <v-container fluid>
         <v-layout row wrap>
-          <!--プロジェクト選択と追加-->
-          <v-flex xs12 sm3 md3 order-md1 order-sm1>
-            <v-card dark tile flat color="grey darken-2" class="project-select">
-              <v-card-text>
-                ＃プロジェクト名
-                <br />＃プロジェクト名
-              </v-card-text>
+
+
+            <v-card color="#FFFFFF" class="pr-5 z-bot" height="570">
+
+              <v-btn  ref="button"  block color="#00D2E3" @click="$vuetify.goTo(target, options)">
+                scroll
+              </v-btn>
+       
+              <v-container id="scroll-target" style="max-height: 450px" class="overflow-y-auto">
+                <v-row v-scroll:#scroll-target="onScroll" align="top" justify="center">
+                  <v-timeline  dense>
+                    <v-timeline-item v-for="n in 7" :key="n">
+                      <template v-slot:icon>
+                        <v-avatar size="75" tile >
+                          <img src= "https://drive.google.com/uc?export=view&id=1SKcQJQkJZYB6oMtBv-7FPX_yp7AXFEBq">
+                        </v-avatar>
+                      </template>
+                      <span slot="opposite">
+                        Tus eu perfecto
+                      </span>
+                      <v-card class="elevation-2">
+                        <v-card-title class="headline">
+                          Lorem ipsum
+                        </v-card-title>
+                        <v-card-text>
+                          Lorem ipsum dolor sit amet, no nam oblique veritus. Commune scaevola imperdiet nec ut, sed euismod convenire principes at. Est et nobis iisque percipit, an vim zril disputando voluptatibus, vix an salutandi sententiae.
+                        </v-card-text>
+                      </v-card>
+                    </v-timeline-item>
+                  </v-timeline>
+                </v-row>
+              </v-container>
+
+
+
+                         <v-col cols="12">
+            <v-text-field
+              v-model="message"
+              :append-icon="marker ? 'mdi-map-marker' : 'mdi-map-marker-off'"
+              :append-outer-icon="message ? 'mdi-send' : 'mdi-microphone'"
+              :prepend-icon="icon"
+              filled
+              clear-icon="mdi-close-circle"
+              clearable
+              label="Message"
+              type="text"
+              @click:append="toggleMarker"
+              @click:append-outer="sendMessage"
+              @click:prepend="changeIcon"
+              @click:clear="clearMessage"
+            ></v-text-field>
+          </v-col>
+
+
             </v-card>
-          </v-flex>
 
-          <!--メインコンテンツ-->
-          <v-flex xs12 sm9 md9 order-md2 order-sm2>
-            <v-card dark tile flat color="#FFFFFF" class="main-content pa-2">
-              <v-card-title class="text-center justify-center py-6" color="#00D2E3">
-                <h1 color="#00D2E3" class="font-weight-bold display-3 basil--text">Bot</h1>
-              </v-card-title>
 
-              <transition name="page">
-                <router-view />
-              </transition>
-
-              <router-link to="/home" style="text-decoration:none;">
-                <v-tabs v-model="tab" background-color="#707070" color="#00D2E3" grow>
-                  <v-tab v-for="item in items" :key="item">{{ item }}</v-tab>
-                </v-tabs>
-              </router-link>
-
-              <v-tabs-items v-model="tab">
-                <v-tab-item v-for="item in items" :key="item"></v-tab-item>
-              </v-tabs-items>
-
-              <!--bot-->
-              <v-card color="#FFFFFF" class="pr-5">
-                <v-timeline dense>
-                  <v-timeline-item v-for="n in 2" :key="n">
-                    <template v-slot:icon>
-                      <v-avatar size="75" tile>
-                        <img
-                          src="https://drive.google.com/uc?export=view&id=1SKcQJQkJZYB6oMtBv-7FPX_yp7AXFEBq"
-                        />
-                      </v-avatar>
-                    </template>
-
-                    <span slot="opposite">Tus eu perfecto</span>
-                    <v-card class="elevation-2">
-                      <v-card-title class="headline">Lorem ipsum</v-card-title>
-                      <v-card-text>Lorem ipsum dolor sit amet, no nam oblique veritus. Commune scaevola imperdiet nec ut, sed euismod convenire principes at. Est et nobis iisque percipit, an vim zril disputando voluptatibus, vix an salutandi sententiae.</v-card-text>
-                    </v-card>
-                  </v-timeline-item>
-                </v-timeline>
-              </v-card>
-            </v-card>
-          </v-flex>
         </v-layout>
       </v-container>
     </v-layout>
-  </v-app>
 </template>
 
 <script>
+const easings = {
+  easeInOutCubic: '',
+}
+function goBottom(targetId) {
+    var obj = document.getElementById(targetId);
+    if(!obj) return;
+    obj.scrollTop = obj.scrollHeight;
+}
+
+function test(){
+  var a = document.documentElement;
+  var y = a.scrollHeight - a.clientHeight;
+  window.scroll(0, y);
+}
+
 export default {
-  data: () => ({
-    tab: null,
-    items: ["Appetizers", "Entrees", "Deserts", "Cocktails"]
-  })
+
+  data () {
+    return {
+      type: 'number',
+      number: 9999,
+      duration: 500,
+      offset: 0,
+      easing: 'easeInOutCubic',
+      password: 'Password',
+      show: false,
+      message: 'Hey!',
+      marker: true,
+      iconIndex: 0,
+      icons: [
+      'mdi-emoticon',
+      'mdi-emoticon-cool',
+      'mdi-emoticon-dead',
+      'mdi-emoticon-excited',
+      'mdi-emoticon-happy',
+      'mdi-emoticon-neutral',
+      'mdi-emoticon-sad',
+      'mdi-emoticon-tongue',
+      ],
+    }
+  },
+
+  computed: {
+   icon () {
+      return this.icons[this.iconIndex]
+    },
+    target () {
+      const value = this[this.type]
+      if (!isNaN(value)) return Number(value)
+      else return value
+    },
+    options () {
+      return {
+        duration: this.duration,
+        offset: this.offset,
+        easing: this.easing,
+      }
+    },
+  },
+
+methods: {
+   // スクロール位置を一番下に移動
+    scrollBottom() {
+      this.$nextTick(() => {
+        window.scrollTo(0, document.body.clientHeight)
+      })
+    },
+    
+    toggleMarker () {
+      this.marker = !this.marker
+    },
+    sendMessage () {
+      this.resetIcon()
+      this.clearMessage()
+    },
+    clearMessage () {
+      this.message = ''
+    },
+    resetIcon () {
+      this.iconIndex = 0
+    },
+    changeIcon () {
+      this.iconIndex === this.icons.length - 1
+        ? this.iconIndex = 0
+        : this.iconIndex++
+    },
+  },
+
 };
+
 </script>
 
 <style scoped>
-.basil {
-  background-color: #fffbe6 !important;
-}
-.basil--text {
-  color: #356859 !important;
-}
-@media screen and (min-width: 500px) {
-  .project-select {
-    height: 800px;
-  }
-  .main-content {
-    height: 100%;
-  }
-  .sub-content {
-    height: 100%;
-  }
-}
+
 </style>
+

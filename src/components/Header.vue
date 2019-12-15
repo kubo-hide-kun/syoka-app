@@ -20,7 +20,7 @@
     </v-btn>
     <v-btn text target="_blank">
       <span class="mr-2">お問い合わせ</span>
-    </v-btn>
+    </v-btn>@
 
     <v-spacer></v-spacer>
 
