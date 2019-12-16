@@ -55,9 +55,13 @@
     </div>
 
     <v-dialog v-model="dialog" persistent max-width="60%">
-      <v-card  v-if="true">
+      <v-card v-if="isEditing">
         <div class="ma-6">
-          <v-card-title class="headline">新規作成</v-card-title>
+          <v-card-title class="headline">
+            予定の編集
+            <v-spacer />
+            <v-btn color="green darken-1" text @click="isEditing = false">元の画面へ</v-btn>
+          </v-card-title>
           <v-text-field v-model="title" label="イベント名" outlined></v-text-field>
           <p>・詳細(MarkDown対応)</p>
           <v-card elevation="2">
@@ -95,8 +99,8 @@
                 </template>
                 <v-time-picker v-if="endTime" v-model="limitTime" full-width>
                   <v-spacer />
-                  <v-btn text color="primary" @click="endTime = false">Cancel</v-btn>
-                  <v-btn text color="primary" @click="$refs.dialog4.save(limitTime)">OK</v-btn>
+                  <v-btn text color="primary" @click="endTime = false">キャンセル</v-btn>
+                  <v-btn text color="primary" @click="$refs.dialog4.save(limitTime)">変更を反映</v-btn>
                 </v-time-picker>
               </v-dialog>
             </v-col>
@@ -120,6 +124,48 @@
             <v-spacer />
             <v-btn color="green darken-1" text @click="post">Disagree</v-btn>
             <v-btn color="green darken-1" text @click="post">Agree</v-btn>
+          </v-card-actions>
+        </div>
+      </v-card>
+
+      <v-card v-else>
+        <v-card-title class="headline">
+          {{title}}
+          <v-spacer />
+          <v-btn color="green darken-1" text @click="isEditing = true">編集画面へ</v-btn>
+        </v-card-title>
+        <div class="ma-6">
+          <v-slider
+            v-model = "progress"
+            max=100
+            label = "完了度(%)"
+          />
+          <v-card elevation="2">
+            <mavon-editor
+              v-model="description"
+              language="ja"
+              :subfield="false"
+              defaultOpen="preview"
+              :toolbars="false"
+            />
+          </v-card>
+          <v-row>
+            <v-col cols="12" lg="6">
+              <v-text-field v-model="limitDate" label="終了日" readonly v-on="on"></v-text-field>
+            </v-col>
+            <v-col cols="12" lg="6">
+              <v-text-field v-model="limitTime" label="終了時刻" readonly v-on="on"></v-text-field>
+            </v-col>
+          </v-row>
+          <div class="chip-list">
+            <div v-for="(tag,key) in tags" :key="key" class="tag-chips">
+              <v-chip class="ma-1" small >{{tag}}</v-chip>
+            </div>
+          </div>
+          <v-card-actions>
+            <v-spacer />
+            <v-btn color="green darken-1" text @click="post">キャンセル</v-btn>
+            <v-btn color="green darken-1" text @click="post">変更を反映</v-btn>
           </v-card-actions>
         </div>
       </v-card>
@@ -153,6 +199,7 @@ export default {
       dialog: false,
       id: "",
       title: "",
+      progress: 0,
       description: "",
       start: null,
       end: null,
@@ -164,6 +211,7 @@ export default {
       endTime: false,
       isGanttChart: 0,
       isMobileView: false,
+      isEditing: false,
       calendarPlugins: [
         // plugins must be defined in the JS
         dayGridPlugin,
@@ -182,6 +230,7 @@ export default {
           id: "0i0",
           title: "Event Now",
           discription: "sample text",
+          progress: 50,
           start: new Date("November 9, 2019 9:00:00"),
           end: new Date("November 9, 2019 18:08:00"),
           resourceIds: ["窪田"],
@@ -192,6 +241,7 @@ export default {
           id: "sdkjb",
           discription: "default text",
           title: "Event Now2",
+          progress: 25,
           start: new Date("October 9, 2019 9:00:00"),
           end: new Date("October 9, 2019 18:09:00"),
           resourceIds: ["窪田", "鳥越"],
@@ -204,28 +254,38 @@ export default {
     handleEventClick(arg) {
       this.id = arg.event.id;
       this.title = arg.event.title;
-      this.description = this.calendarEvents
-        .filter(event => event.id == arg.event.id)[0]
-        .discription;
+      this.progress = this.calendarEvents.filter(
+        event => event.id == arg.event.id
+      )[0].progress;
+      this.description = this.calendarEvents.filter(
+        event => event.id == arg.event.id
+      )[0].discription;
       this.start = arg.event.start;
       this.end = arg.event.end;
       this.resourceIds = arg.event._def.resourceIds;
-      this.tags = this.calendarEvents.filter(event => event.id == arg.event.id)[0].tags;
+      this.tags = this.calendarEvents.filter(
+        event => event.id == arg.event.id
+      )[0].tags;
 
-      this.limitDate = 
-        arg.event.end.getFullYear() + "-" +
-        (1+arg.event.end.getMonth()) + "-" +
+      this.limitDate =
+        arg.event.end.getFullYear() +
+        "-" +
+        (1 + arg.event.end.getMonth()) +
+        "-" +
         arg.event.end.getDate();
       this.limitTime =
-        arg.event.end.getHours() + ":" +
-        ('00'+arg.event.end.getMinutes()).slice(-2);
+        arg.event.end.getHours() +
+        ":" +
+        ("00" + arg.event.end.getMinutes()).slice(-2);
       this.dialog = true;
     },
     post() {
       this.dialog = false;
+      this.isEditing = false;
       const postDatas = {
         id: this.id,
         title: this.title,
+        progress: this.progress,
         description: this.description,
         start: this.start,
         end: this.end,
