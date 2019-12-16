@@ -135,6 +135,11 @@
           <v-btn color="green darken-1" text @click="isEditing = true">編集画面へ</v-btn>
         </v-card-title>
         <div class="ma-6">
+          <v-slider
+            v-model = "progress"
+            max=100
+            label = "完了度(%)"
+          />
           <v-card elevation="2">
             <mavon-editor
               v-model="description"
@@ -194,6 +199,7 @@ export default {
       dialog: false,
       id: "",
       title: "",
+      progress: 0,
       description: "",
       start: null,
       end: null,
@@ -224,6 +230,7 @@ export default {
           id: "0i0",
           title: "Event Now",
           discription: "sample text",
+          progress: 50,
           start: new Date("November 9, 2019 9:00:00"),
           end: new Date("November 9, 2019 18:08:00"),
           resourceIds: ["窪田"],
@@ -234,6 +241,7 @@ export default {
           id: "sdkjb",
           discription: "default text",
           title: "Event Now2",
+          progress: 25,
           start: new Date("October 9, 2019 9:00:00"),
           end: new Date("October 9, 2019 18:09:00"),
           resourceIds: ["窪田", "鳥越"],
@@ -246,6 +254,9 @@ export default {
     handleEventClick(arg) {
       this.id = arg.event.id;
       this.title = arg.event.title;
+      this.progress = this.calendarEvents.filter(
+        event => event.id == arg.event.id
+      )[0].progress;
       this.description = this.calendarEvents.filter(
         event => event.id == arg.event.id
       )[0].discription;
@@ -274,6 +285,7 @@ export default {
       const postDatas = {
         id: this.id,
         title: this.title,
+        progress: this.progress,
         description: this.description,
         start: this.start,
         end: this.end,
