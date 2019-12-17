@@ -24,14 +24,14 @@
                         :rules="nameRules"
                         label="Name"
                         required
-                      ></v-text-field>
+                      />
                       <v-text-field v-model="pass" :rules="emailRules" label="pass" required></v-text-field>
                       <v-checkbox
                         v-model="checkbox"
                         :rules="[v => !!v || 'You must agree to continue!']"
                         label="Do you agree?"
                         required
-                      ></v-checkbox>
+                      />
                       <v-btn
                         :disabled="!valid"
                         color="success"
@@ -51,14 +51,14 @@
                         </template>
                         <v-card>
                           <v-card-title class="headline">新規登録！</v-card-title>
-                          <v-text-field label="Name*" required class="mr-5 ml-5"></v-text-field>
-                          <v-text-field label="Email*" required class="mr-5 ml-5"></v-text-field>
+                          <v-text-field label="Name*" required class="mr-5 ml-5" />
+                          <v-text-field label="Email*" required class="mr-5 ml-5" />
                           <v-text-field
                             label="Password*"
                             type="password"
                             required
                             class="mr-5 ml-5"
-                          ></v-text-field>
+                          />
                           <v-card-actions>
                             <v-checkbox
                               v-model="checkbox"
@@ -66,7 +66,7 @@
                               label="Do you agree?"
                               required
                               class="ml-3"
-                            ></v-checkbox>
+                            />
                             <v-btn color="green darken-1" text @click="dialog = false">キャンセル</v-btn>
                             <v-btn color="green darken-1" text @click="dialog = false">登録</v-btn>
                           </v-card-actions>
@@ -103,9 +103,9 @@
                           width="100%"
                           gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
                         >
-                          <v-card-title class="fill-height align-end" v-text="card.title"></v-card-title>
+                          <v-card-title class="fill-height align-end" v-text="card.title" />
                         </v-img>
-                        <v-card-text class="text--primary" v-text="card.text"></v-card-text>
+                        <v-card-text class="text--primary" v-text="card.text" />
                       </v-card>
                     </v-flex>
                   </v-col>
@@ -125,8 +125,8 @@
                     fill-dot
                   >
                     <v-card :color="item.color" dark>
-                      <v-card-title class="title" v-text="item.title"></v-card-title>
-                      <v-card-text class="white text--primary" v-text="item.text"></v-card-text>
+                      <v-card-title class="title" v-text="item.title" />
+                      <v-card-text class="white text--primary" v-text="item.text" />
                     </v-card>
                   </v-timeline-item>
                 </v-timeline>
