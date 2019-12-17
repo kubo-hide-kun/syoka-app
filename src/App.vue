@@ -6,7 +6,6 @@
       <transition name="page">
         <router-view />
       </transition> 
-      <tab /> 
     </v-content>
   </v-app>
 
