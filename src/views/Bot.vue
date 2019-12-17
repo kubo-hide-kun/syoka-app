@@ -55,7 +55,7 @@
                     @click:append-outer="sendMessage"
                     @click:prepend="changeIcon"
                     @click:clear="clearMessage"
-                  ></v-text-field>
+                  />
                 </v-col>
               </v-card>
             </v-container>

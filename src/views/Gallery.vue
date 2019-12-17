@@ -19,10 +19,10 @@
                       <v-card :color="item.color" dark>
                         <v-list-item three-line>
                           <v-list-item-content class="align-self-start">
-                            <v-list-item-subtitle v-text="item.artist"></v-list-item-subtitle>
+                            <v-list-item-subtitle v-text="item.artist" />
                           </v-list-item-content>
 
-                          <v-img :src="item.src"></v-img>
+                          <v-img :src="item.src" />
                         </v-list-item>
                       </v-card>
                       <div class="text-center pa-2">
