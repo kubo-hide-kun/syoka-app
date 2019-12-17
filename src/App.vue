@@ -12,13 +12,14 @@
 </template>
 
 <script>
-//import Header from "./components/Header";
+import Header from "./components/Header";
 import SignedHeader from "./components/signedHeader";
 import tab from "./components/Tab";
 export default {
   name: "App",
   components: {
     SignedHeader,
+    Header,
     tab,
 
   },
