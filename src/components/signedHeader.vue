@@ -24,16 +24,16 @@
 
     <v-spacer></v-spacer>
 
-    <v-btn text target="_blank" @click="transitionPage('home')">
+    <v-btn text target="_blank" @click="transitionPage('/home')">
       <span class="mr-2">ホーム</span>
     </v-btn>
-    <v-btn text target="_blank" @click="transitionPage('projects')">
-      <span class="mr-2">プロジェクト</span>
+    <v-btn text target="_blank" @click="transitionPage('/calendar')">
+      <span class="mr-2">スケジュール</span>
     </v-btn>
-    <v-btn text target="_blank" @click="transitionPage('notifications')">
-      <span class="mr-2">通知</span>
+    <v-btn text target="_blank" @click="transitionPage('/bot')">
+      <span class="mr-2">bot</span>
     </v-btn>
-    <v-btn text target="_blank" @click="transitionPage('profile')">
+    <v-btn text target="_blank" @click="transitionPage('/profile')">
       <span class="mr-2">プロフィール</span>
     </v-btn>
     <v-menu offset-y>
@@ -77,9 +77,9 @@ export default {
         "お問い合わせ / contact"
       ],
       pages: [
-        { title: "アナリティクス", link: "analytics" },
-        { title: "設定", link: "config" },
-        { title: "お問い合わせ", link: "contact" },
+        { title: "アクティビティ", link: "/activity" },
+        { title: "ギャラリー", link: "/gallery" },
+        { title: "設定", link: "/config" },
         { title: "ログアウト", link: "logout" }
       ]
     };
@@ -97,7 +97,12 @@ export default {
   methods: {
     transitionPage: function(page) {
       if (page === "logout") this.$store.state.signed = false;
-      else alert("該当ページは存在しません / " + page);
+      else if (page === "/home") this.$router.push(page);
+      else if (page === "/calendar") this.$router.push(page);
+      else if (page === "/bot") this.$router.push(page);
+      else if (page === "/activity") this.$router.push(page);
+      else if (page === "/gallery") this.$router.push(page);
+      else alert("該当ページは存在しません " + page);
     },
     querySelections: function(v) {
       this.loading = true;
