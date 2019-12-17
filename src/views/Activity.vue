@@ -11,14 +11,6 @@
           <!--メインコンテンツ-->
           <v-flex xs12 sm9 md9 order-md2 order-sm2>
             <v-card dark tile flat color="#FFFFFF" class="main-content pa-2">
-              <div id="nav" class="box17">
-                <router-link to="/Home">Home</router-link>
-                <router-link to="Login">Login</router-link>
-              </div>
-              <transition name="page">
-                <router-view />
-              </transition>
-
               <!--掲示板-->
               <v-flex xs12>
                 <v-card dark color="brown lighten-4">
@@ -43,11 +35,11 @@
                     <v-card :color="item.color" dark>
                       <v-list-item three-line>
                         <v-list-item-content class="align-self-start">
-                          <v-list-item-title class="headline mb-2" v-text="item.title"></v-list-item-title>
-                          <v-list-item-subtitle v-text="item.artist"></v-list-item-subtitle>
+                          <v-list-item-title class="headline mb-2" v-text="item.title" />
+                          <v-list-item-subtitle v-text="item.artist" />
                         </v-list-item-content>
                         <v-list-item-avatar size="180" tile>
-                          <v-img :src="item.src"></v-img>
+                          <v-img :src="item.src" />
                         </v-list-item-avatar>
                       </v-list-item>
                     </v-card>
@@ -58,11 +50,11 @@
                     <v-card :color="item2.color" dark>
                       <v-list-item three-line>
                         <v-list-item-content class="align-self-start">
-                          <v-list-item-title class="headline mb-2" v-text="item2.title"></v-list-item-title>
-                          <v-list-item-subtitle v-text="item2.artist"></v-list-item-subtitle>
+                          <v-list-item-title class="headline mb-2" v-text="item2.title" />
+                          <v-list-item-subtitle v-text="item2.artist" />
                         </v-list-item-content>
                         <v-list-item-avatar size="180" tile>
-                          <v-img :src="item2.src"></v-img>
+                          <v-img :src="item2.src" />
                         </v-list-item-avatar>
                       </v-list-item>
                     </v-card>

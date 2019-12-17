@@ -22,7 +22,7 @@
       <span class="mr-2">お問い合わせ</span>
     </v-btn>
 
-    <v-spacer></v-spacer>
+    <v-spacer />
 
     <div class="searchForm">
       <v-autocomplete
@@ -36,7 +36,7 @@
         hide-no-data
         hide-details
         label="ページの検索"
-      ></v-autocomplete>
+      />
     </div>
   </v-app-bar>
 </template>
