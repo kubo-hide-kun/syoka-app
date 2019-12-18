@@ -19,10 +19,10 @@
         hide-no-data
         hide-details
         label="プロジェクトの検索"
-      ></v-autocomplete>
+      />
     </div>
 
-    <v-spacer></v-spacer>
+    <v-spacer />
 
     <v-btn text target="_blank" @click="transitionPage('/home')">
       <span class="mr-2">ホーム</span>

@@ -7,7 +7,6 @@
           <v-flex xs12 sm3 md3 order-md1 order-sm1>
             <ProjectList />
           </v-flex>
-
           <!--メインコンテンツ-->
           <v-flex xs12 sm9 md9 order-md2 order-sm2>
             <GanttChart />

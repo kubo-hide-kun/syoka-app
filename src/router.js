@@ -2,11 +2,11 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Login from './views/Login.vue'
 import Home from './views/Home.vue'
-import Calendar from './views/Calendar.vue'
-import Bot from './views/Bot.vue'
 import Activity from './views/Activity.vue'
+import Bot from './views/Bot.vue'
+import Calendar from './views/Calendar.vue'
 import Gallery from './views/Gallery.vue'
-import GanttChart from './views/GanttChart'
+import GanttChart from './views/GanttChart.vue'
 
 Vue.use(Router)
 
@@ -19,6 +19,7 @@ export default new Router({
       name: 'login',
       component: Login
     },
+
     {
       path: '/home',
       name: 'home',

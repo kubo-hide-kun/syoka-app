@@ -5,20 +5,20 @@
     <v-content>
       <transition name="page">
         <router-view />
-      </transition>
+      </transition> 
     </v-content>
   </v-app>
+
 </template>
 
 <script>
 import Header from "./components/Header";
 import SignedHeader from "./components/signedHeader";
-
 export default {
   name: "App",
   components: {
-    Header,
-    SignedHeader
+    SignedHeader,
+    Header
   },
   data: () => ({
     //
