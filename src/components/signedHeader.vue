@@ -33,8 +33,8 @@
     <v-btn text target="_blank" @click="transitionPage('/bot')">
       <span class="mr-2">bot</span>
     </v-btn>
-    <v-btn text target="_blank" @click="transitionPage('/profile')">
-      <span class="mr-2">プロフィール</span>
+    <v-btn text target="_blank" @click="transitionPage('/activity')">
+      <span class="mr-2">アクティビティ</span>
     </v-btn>
     <v-menu offset-y>
       <template v-slot:activator="{ on }">
@@ -77,7 +77,7 @@ export default {
         "お問い合わせ / contact"
       ],
       pages: [
-        { title: "アクティビティ", link: "/activity" },
+        { title: "プロフィール", link: "/profile" },
         { title: "ギャラリー", link: "/gallery" },
         { title: "設定", link: "/config" },
         { title: "ログアウト", link: "logout" }
