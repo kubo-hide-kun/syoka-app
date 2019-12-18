@@ -1,8 +1,8 @@
 <template>
   <v-app-bar app>
-    <v-avatar>
+    <v-avatar color="grey lighten-2">
       <img
-        src="https://pbs.twimg.com/profile_images/1064010537665609728/4oTOHpow_400x400.jpg"
+        src="https://drive.google.com/uc?export=view&id=1iCEvmUTG1wXexB7qb2dfIQJoIw7eB9-H"
         alt="icon"
       />
     </v-avatar>
