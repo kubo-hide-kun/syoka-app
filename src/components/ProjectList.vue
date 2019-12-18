@@ -6,9 +6,27 @@
           <p class="display-1 text--bold-white">Projects</p>
         </v-col>
         <v-col cols="6" md="4">
-          <v-btn color="green darken-1" class="center" large>
-            <b>新規作成</b>
-          </v-btn>
+          <v-dialog v-model="dialog" persistent max-width="60%">
+            <template v-slot:activator="{ on }">
+              <div class="my-4">
+                <v-btn color="green darken-1" class="center" large v-on="on">
+                  <b>新規作成</b>
+                </v-btn>
+              </div>
+            </template>
+            <v-card>
+              <div class="ma-6">
+                <v-card-title class="headline">プロジェクトを追加する</v-card-title>
+                <v-text-field v-model="title" label="参加したプロジェクト名を入力" outlined></v-text-field>
+                <v-btn text small color="primary">プロジェクトを新規作成する</v-btn>
+                <v-card-actions>
+                  <v-spacer />
+                  <v-btn color="green darken-1" text @click="dialog = false">Disagree</v-btn>
+                  <v-btn color="green darken-1" text @click="post">Agree</v-btn>
+                </v-card-actions>
+              </div>
+            </v-card>
+          </v-dialog>
         </v-col>
       </v-row>
     </v-card-text>
@@ -34,6 +52,7 @@
 export default {
   data() {
     return {
+      dialog: false,
       projects: [
         { title: "A-projects", isFire: true },
         { title: "B-projects", isFire: false },
@@ -45,6 +64,9 @@ export default {
   methods: {
     choiceProjects(project) {
       console.log(project.title);
+    },
+    post() {
+      this.dialog = false;
     }
   }
 };
