@@ -21,8 +21,8 @@
                 <v-btn text small color="primary">プロジェクトを新規作成する</v-btn>
                 <v-card-actions>
                   <v-spacer />
-                  <v-btn color="green darken-1" text @click="dialog = false">Disagree</v-btn>
-                  <v-btn color="green darken-1" text @click="post">Agree</v-btn>
+                  <v-btn color="green darken-1" text @click="dialog = false">キャンサル</v-btn>
+                  <v-btn color="green darken-1" text @click="post">参加</v-btn>
                 </v-card-actions>
               </div>
             </v-card>
