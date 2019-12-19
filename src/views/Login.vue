@@ -23,7 +23,6 @@
                         :rules="nameRules"
                         label="Name"
                         required
-<<<<<<< HEAD
                       ></v-text-field>
                       <v-text-field 
                         v-model="pass" 
@@ -32,10 +31,6 @@
                         label="pass" 
                         required
                       ></v-text-field>
-=======
-                      />
-                      <v-text-field v-model="pass" :rules="emailRules" label="pass" required></v-text-field>
->>>>>>> 921171154e92a748fca4bd0995e10be3269b6c48
                       <v-checkbox
                         v-model="checkbox"
                         :rules="[v => !!v || 'You must agree to continue!']"
