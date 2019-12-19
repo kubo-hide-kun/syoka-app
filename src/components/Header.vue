@@ -88,7 +88,7 @@ export default {
         { title: "機能", link: "/feature" },
         { title: "ご利用の流れ", link: "/usage" },
         { title: "お問い合わせ", link: "connect" }
-      ],
+      ]
     };
   },
   watch: {
