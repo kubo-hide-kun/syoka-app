@@ -22,28 +22,40 @@
                 <h1 color="#00D2E3" class="font-weight-bold display-3 basil--text">{{ selectedComponent }}</h1>
               </v-card-title>
                 <v-tabs v-model="tab" background-color="#707070" color="#00D2E3" grow class="pa-1">
-                  <v-tab>
-                    <router-link to="/home" class="basil--text">ホーム</router-link>
+                  <!--メインコンテンツ<v-tab>
+                    <router-link to="/home" class="basil">ホーム</router-link>
+                    
                   </v-tab>
                   <v-tab>
                    カレンダ
                   </v-tab>
 
                   <v-tab>
-                  <router-link to="/Bot" class="basil--text">ボット</router-link>
+                  <router-link to="/Bot" class="basil">ボット</router-link>
                   </v-tab>
                   
                   <v-tab>
                     日記
                   </v-tab>
                   <v-tab>
-                    <router-link to="/Gallery" class="basil--text">ギャラリー</router-link>
-                  </v-tab>                                         
-                </v-tabs>
+                    <router-link to="/Gallery" class="basil">ギャラリー</router-link>
+                  </v-tab> -->                                        
+                
+                  <v-tab>
+                    <input type="radio" id="Home" value="Home" v-model="selectedComponent">Home
+                  </v-tab>
+                  <v-tab>
+                    <input type="radio" id="Bot" value="Bot" v-model="selectedComponent">Bot
+                  </v-tab>
+                  <v-tab>
+                    <input type="radio" id="Gallery" value="Gallery" v-model="selectedComponent">Gallery 
+                  </v-tab>
+
+                  </v-tabs>             
               <v-tabs-items v-model="tab">
                 <v-tab-item v-for="item in items" :key="item"></v-tab-item>
               </v-tabs-items>
-              <component :is="selectedComponent"/>       
+              <component :is="selectedComponent" />       
             </v-card>
           </v-flex>
 
@@ -73,27 +85,25 @@
 
 <script>
 import Home from '@/components/Home.vue'
-
+import Bot from '@/components/Bot.vue'
+import Gallery from '@/components/Gallery.vue'
 export default {
   name: "tab",
   components: {
     Home,
-
+    Bot,
+    Gallery,
   },
-
   data () {
     return {
       selectedComponent: '',
     }
   },
-
   computed: {
   url() {
     return location.pathname.match(/^\/home|^\/bot|^\/Gallery/);
   }
   }
-
-
 };
 </script>
 
@@ -101,7 +111,7 @@ export default {
 .basil {
   background-color: #fffbe6 !important;
 }
-.basil--text {
+.basil {
   color: #FFFFFF !important;
   font-weight:  bold;
 }

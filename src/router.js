@@ -4,8 +4,9 @@ import Login from './views/Login.vue'
 
 
 import Activity from './views/Activity.vue'
-import Bot from './views/Bot'
-import Gallery from './views/Gallery'
+//import Bot from './views/Bot'
+//import Gallery from './views/Gallery'
+
 //あたらしいるーとをかく
 Vue.use(Router)
 
@@ -27,15 +28,15 @@ export default new Router({
       name: 'Activity',
       component: Activity
     },
-    {
-      path: '/bot',
-      name: 'Bot',
-      component: Bot
-    },
-    {
-      path: '/Gallery',
-      name: 'Gallery',
-      component: Gallery
-    },
+//    {
+//      path: '/bot',
+//      name: 'Bot',
+//      component: Bot
+//    },
+//    {
+//      path: '/Gallery',
+//      name: 'Gallery',
+//      component: Gallery
+//    },
   ]
 })

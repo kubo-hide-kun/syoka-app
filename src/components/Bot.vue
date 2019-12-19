@@ -1,10 +1,11 @@
 <template>
+<v-app>
     <v-layout column align-start>
       <v-container fluid>
         <v-layout row wrap>
 
 
-            <v-card color="#FFFFFF" class="pr-5 z-bot" height="570">
+            <v-card color="#FFFFFF" class="pr-5" height="570">
 
               <v-btn  ref="button"  block color="#00D2E3" @click="$vuetify.goTo(target, options)">
                 scroll
@@ -62,6 +63,7 @@
         </v-layout>
       </v-container>
     </v-layout>
+</v-app>
 </template>
 
 <script>

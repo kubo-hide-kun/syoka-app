@@ -20,12 +20,17 @@
                     <v-form ref="form" v-model="valid" lazy-validation class="login-form pa-10">
                       <v-text-field
                         v-model="name"
-                        :counter="10"
                         :rules="nameRules"
                         label="Name"
                         required
                       ></v-text-field>
-                      <v-text-field v-model="pass" :rules="emailRules" label="pass" required></v-text-field>
+                      <v-text-field 
+                        v-model="pass" 
+                        type="password"
+                        :rules="emailRules" 
+                        label="pass" 
+                        required
+                      ></v-text-field>
                       <v-checkbox
                         v-model="checkbox"
                         :rules="[v => !!v || 'You must agree to continue!']"
@@ -38,7 +43,11 @@
                         class="mr-2 mt-2"
                         @click="validate"
                       >login</v-btn>
-                      <v-btn color="error" class="mr-2 mt-2" @click="reset">reset</v-btn>
+                      <v-btn 
+                        color="error" 
+                        class="mr-2 mt-2" 
+                        @click="reset"
+                      >reset</v-btn>
 
                       <v-dialog v-model="dialog" persistent max-width="400">
                         <template v-slot:activator="{ on }">
@@ -141,8 +150,39 @@
 
 <script>
 export default {
+  methods: {
+    validate () {
+      if (this.$refs.form.validate()) {
+        this.snackbar = true
+      }
+    },
+    reset () {
+      this.$refs.form.reset()
+    },
+  },
+
   data: () => ({
+    valid: true,
+    name: '',
+    nameRules: [
+      v => !!v || 'Name is required',
+
+    ],
+    email: '',
+    emailRules: [
+      v => !!v || 'pass is required',
+
+    ],
+    select: null,
+    items: [
+      'Item 1',
+      'Item 2',
+      'Item 3',
+      'Item 4',
+    ],
+    checkbox: false,
     dialog: false,
+
     cards: [
       {
         title: "プロジェクトの進行度を可視化",
