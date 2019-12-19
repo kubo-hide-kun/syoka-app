@@ -1,8 +1,31 @@
 <template>
-  <v-app-bar app>
-    <v-avatar>
+  <v-app-bar v-if="$vuetify.breakpoint.xsOnly" app>
+    <v-avatar color="grey lighten-2">
       <img
-        src="https://pbs.twimg.com/profile_images/1064010537665609728/4oTOHpow_400x400.jpg"
+        src="https://drive.google.com/uc?export=view&id=1iCEvmUTG1wXexB7qb2dfIQJoIw7eB9-H"
+        alt="icon"
+      />
+    </v-avatar>
+    <v-spacer />
+    <v-menu offset-y>
+      <template v-slot:activator="{ on }">
+        <v-btn text v-on="on">
+          <v-icon
+            v-text="'mdi-format-list-bulleted'"
+          />
+        </v-btn>
+      </template>
+      <v-list>
+        <v-list-item v-for="(page, index) in responsivePages" :key="index" @click="transitionPage(page.link)">
+          <v-list-item-title>{{ page.title }}</v-list-item-title>
+        </v-list-item>
+      </v-list>
+    </v-menu>
+  </v-app-bar>
+  <v-app-bar v-else app>
+    <v-avatar color="grey lighten-2">
+      <img
+        src="https://drive.google.com/uc?export=view&id=1iCEvmUTG1wXexB7qb2dfIQJoIw7eB9-H"
         alt="icon"
       />
     </v-avatar>
@@ -24,17 +47,17 @@
 
     <v-spacer />
 
-    <v-btn text target="_blank" @click="transitionPage('home')">
+    <v-btn text target="_blank" @click="transitionPage('/home')">
       <span class="mr-2">ホーム</span>
     </v-btn>
-    <v-btn text target="_blank" @click="transitionPage('projects')">
-      <span class="mr-2">プロジェクト</span>
+    <v-btn text target="_blank" @click="transitionPage('/calendar')">
+      <span class="mr-2">スケジュール</span>
     </v-btn>
-    <v-btn text target="_blank" @click="transitionPage('notifications')">
-      <span class="mr-2">通知</span>
+    <v-btn text target="_blank" @click="transitionPage('/bot')">
+      <span class="mr-2">bot</span>
     </v-btn>
-    <v-btn text target="_blank" @click="transitionPage('profile')">
-      <span class="mr-2">プロフィール</span>
+    <v-btn text target="_blank" @click="transitionPage('/activity')">
+      <span class="mr-2">アクティビティ</span>
     </v-btn>
     <v-menu offset-y>
       <template v-slot:activator="{ on }">
@@ -48,12 +71,6 @@
         </v-list-item>
       </v-list>
     </v-menu>
-    <v-avatar>
-      <img
-        src="https://pbs.twimg.com/profile_images/1064010537665609728/4oTOHpow_400x400.jpg"
-        alt="icon"
-      />
-    </v-avatar>
   </v-app-bar>
 </template>
 
@@ -77,9 +94,19 @@ export default {
         "お問い合わせ / contact"
       ],
       pages: [
-        { title: "アナリティクス", link: "analytics" },
-        { title: "設定", link: "config" },
-        { title: "お問い合わせ", link: "contact" },
+        { title: "プロフィール", link: "/profile" },
+        { title: "ギャラリー", link: "/gallery" },
+        { title: "設定", link: "/config" },
+        { title: "ログアウト", link: "logout" }
+      ],
+      responsivePages: [
+        { title: "ホーム", link: "/home" },
+        { title: "カレンダー", link: "/calendar" },
+        { title: "bot", link: "/bot" },
+        { title: "アクティビティ", link: "/activity" },
+        { title: "プロフィール", link: "/profile" },
+        { title: "ギャラリー", link: "/gallery" },
+        { title: "設定", link: "/config" },
         { title: "ログアウト", link: "logout" }
       ]
     };
@@ -96,8 +123,16 @@ export default {
   },
   methods: {
     transitionPage: function(page) {
-      if (page === "logout") this.$store.state.signed = false;
-      else alert("該当ページは存在しません / " + page);
+      if (page === "logout") {
+        this.$store.state.signed = false;
+        this.$router.push("/");
+      }
+      else if (page === "/home") this.$router.push(page);
+      else if (page === "/calendar") this.$router.push(page);
+      else if (page === "/bot") this.$router.push(page);
+      else if (page === "/activity") this.$router.push(page);
+      else if (page === "/gallery") this.$router.push(page);
+      else alert("該当ページは存在しません " + page);
     },
     querySelections: function(v) {
       this.loading = true;
