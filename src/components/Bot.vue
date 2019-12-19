@@ -1,4 +1,5 @@
 <template>
+<<<<<<< HEAD:src/components/Bot.vue
 <v-app>
     <v-layout column align-start>
       <v-container fluid>
@@ -64,102 +65,155 @@
       </v-container>
     </v-layout>
 </v-app>
+=======
+  <v-app>
+    <v-layout column align-start>
+      <v-container fluid>
+        <v-layout row wrap>
+          <!--プロジェクト選択と追加-->
+          <v-flex xs12 sm3 md3 order-md1 order-sm1>
+            <ProjectList />
+          </v-flex>
+
+          <!--メインコンテンツ-->
+          <v-flex xs12 sm9 md9 order-md2 order-sm2>
+            <v-container grid-list-md text-center>
+              <v-card color="#FFFFFF" class="pr-5 z-bot">
+                <v-btn
+                  ref="button"
+                  block
+                  color="#00D2E3"
+                  @click="$vuetify.goTo(target, options)"
+                >scroll</v-btn>
+
+                <v-container id="scroll-target" style="max-height: 75vh" class="overflow-y-auto">
+                  <v-row v-scroll:#scroll-target="onScroll" align="top" justify="center">
+                    <v-timeline dense>
+                      <v-timeline-item v-for="n in 7" :key="n">
+                        <template v-slot:icon>
+                          <v-avatar size="75" tile>
+                            <img
+                              src="https://drive.google.com/uc?export=view&id=1SKcQJQkJZYB6oMtBv-7FPX_yp7AXFEBq"
+                            />
+                          </v-avatar>
+                        </template>
+                        <span slot="opposite">Tus eu perfecto</span>
+                        <v-card class="elevation-2">
+                          <v-card-title class="headline">Lorem ipsum</v-card-title>
+                          <v-card-text>Lorem ipsum dolor sit amet, no nam oblique veritus. Commune scaevola imperdiet nec ut, sed euismod convenire principes at. Est et nobis iisque percipit, an vim zril disputando voluptatibus, vix an salutandi sententiae.</v-card-text>
+                        </v-card>
+                      </v-timeline-item>
+                    </v-timeline>
+                  </v-row>
+                </v-container>
+
+                <v-col cols="12">
+                  <v-text-field
+                    v-model="message"
+                    :append-icon="marker ? 'mdi-map-marker' : 'mdi-map-marker-off'"
+                    :append-outer-icon="message ? 'mdi-send' : 'mdi-microphone'"
+                    :prepend-icon="icon"
+                    filled
+                    clear-icon="mdi-close-circle"
+                    clearable
+                    label="Message"
+                    type="text"
+                    @click:append="toggleMarker"
+                    @click:append-outer="sendMessage"
+                    @click:prepend="changeIcon"
+                    @click:clear="clearMessage"
+                  />
+                </v-col>
+              </v-card>
+            </v-container>
+          </v-flex>
+        </v-layout>
+      </v-container>
+    </v-layout>
+  </v-app>
+>>>>>>> 921171154e92a748fca4bd0995e10be3269b6c48:src/views/Bot.vue
 </template>
 
 <script>
-const easings = {
-  easeInOutCubic: '',
-}
-function goBottom(targetId) {
-    var obj = document.getElementById(targetId);
-    if(!obj) return;
-    obj.scrollTop = obj.scrollHeight;
-}
-
-function test(){
-  var a = document.documentElement;
-  var y = a.scrollHeight - a.clientHeight;
-  window.scroll(0, y);
-}
+import ProjectList from "../components/ProjectList";
 
 export default {
-
-  data () {
+  components: {
+    ProjectList
+  },
+  data() {
     return {
-      type: 'number',
+      type: "number",
       number: 9999,
       duration: 500,
       offset: 0,
-      easing: 'easeInOutCubic',
-      password: 'Password',
+      easing: "easeInOutCubic",
+      password: "Password",
       show: false,
-      message: 'Hey!',
+      message: "Hey!",
       marker: true,
       iconIndex: 0,
       icons: [
-      'mdi-emoticon',
-      'mdi-emoticon-cool',
-      'mdi-emoticon-dead',
-      'mdi-emoticon-excited',
-      'mdi-emoticon-happy',
-      'mdi-emoticon-neutral',
-      'mdi-emoticon-sad',
-      'mdi-emoticon-tongue',
-      ],
-    }
+        "mdi-emoticon",
+        "mdi-emoticon-cool",
+        "mdi-emoticon-dead",
+        "mdi-emoticon-excited",
+        "mdi-emoticon-happy",
+        "mdi-emoticon-neutral",
+        "mdi-emoticon-sad",
+        "mdi-emoticon-tongue"
+      ]
+    };
   },
 
   computed: {
-   icon () {
-      return this.icons[this.iconIndex]
+    icon() {
+      return this.icons[this.iconIndex];
     },
-    target () {
-      const value = this[this.type]
-      if (!isNaN(value)) return Number(value)
-      else return value
+    target() {
+      const value = this[this.type];
+      if (!isNaN(value)) return Number(value);
+      else return value;
     },
-    options () {
+    options() {
       return {
         duration: this.duration,
         offset: this.offset,
-        easing: this.easing,
-      }
-    },
+        easing: this.easing
+      };
+    }
   },
 
-methods: {
-   // スクロール位置を一番下に移動
+  methods: {
+    // スクロール位置を一番下に移動
     scrollBottom() {
       this.$nextTick(() => {
-        window.scrollTo(0, document.body.clientHeight)
-      })
+        window.scrollTo(0, document.body.clientHeight);
+      });
     },
-    
-    toggleMarker () {
-      this.marker = !this.marker
+
+    toggleMarker() {
+      this.marker = !this.marker;
     },
-    sendMessage () {
-      this.resetIcon()
-      this.clearMessage()
+    sendMessage() {
+      this.resetIcon();
+      this.clearMessage();
     },
-    clearMessage () {
-      this.message = ''
+    clearMessage() {
+      this.message = "";
     },
-    resetIcon () {
-      this.iconIndex = 0
+    resetIcon() {
+      this.iconIndex = 0;
     },
-    changeIcon () {
+    changeIcon() {
       this.iconIndex === this.icons.length - 1
-        ? this.iconIndex = 0
-        : this.iconIndex++
-    },
-  },
-
+        ? (this.iconIndex = 0)
+        : this.iconIndex++;
+    }
+  }
 };
-
 </script>
 
 <style scoped>
-
 </style>
 
