@@ -10,7 +10,9 @@
     <v-menu offset-y>
       <template v-slot:activator="{ on }">
         <v-btn text v-on="on">
-          <span class="mr-2">もっと見る</span>
+          <v-icon
+            v-text="'mdi-format-list-bulleted'"
+          />
         </v-btn>
       </template>
       <v-list>
@@ -121,7 +123,10 @@ export default {
   },
   methods: {
     transitionPage: function(page) {
-      if (page === "logout") this.$store.state.signed = false;
+      if (page === "logout") {
+        this.$store.state.signed = false;
+        this.$router.push("/");
+      }
       else if (page === "/home") this.$router.push(page);
       else if (page === "/calendar") this.$router.push(page);
       else if (page === "/bot") this.$router.push(page);

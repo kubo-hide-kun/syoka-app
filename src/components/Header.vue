@@ -1,5 +1,28 @@
 <template>
-  <v-app-bar app>
+  <v-app-bar v-if="$vuetify.breakpoint.xsOnly" app>
+    <v-avatar color="grey lighten-2">
+      <img
+        src="https://drive.google.com/uc?export=view&id=1iCEvmUTG1wXexB7qb2dfIQJoIw7eB9-H"
+        alt="icon"
+      />
+    </v-avatar>
+    <v-spacer />
+    <v-menu offset-y>
+      <template v-slot:activator="{ on }">
+        <v-btn text v-on="on">
+          <v-icon
+            v-text="'mdi-format-list-bulleted'"
+          />
+        </v-btn>
+      </template>
+      <v-list>
+        <v-list-item v-for="(page, index) in pages" :key="index" @click="transitionPage(page.link)">
+          <v-list-item-title>{{ page.title }}</v-list-item-title>
+        </v-list-item>
+      </v-list>
+    </v-menu>
+  </v-app-bar>
+  <v-app-bar v-else app>
     <v-avatar color="grey lighten-2">
       <img
         src="https://drive.google.com/uc?export=view&id=1iCEvmUTG1wXexB7qb2dfIQJoIw7eB9-H"
@@ -59,7 +82,13 @@ export default {
         "機能 / contents",
         "ご利用の流れ / usage",
         "お問い合わせ / contact"
-      ]
+      ],
+      pages: [
+        { title: "特徴", link: "/feature" },
+        { title: "機能", link: "/feature" },
+        { title: "ご利用の流れ", link: "/usage" },
+        { title: "お問い合わせ", link: "connect" }
+      ],
     };
   },
   watch: {
