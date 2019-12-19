@@ -1,5 +1,26 @@
 <template>
-  <v-app-bar app>
+  <v-app-bar v-if="$vuetify.breakpoint.xsOnly" app>
+    <v-avatar color="grey lighten-2">
+      <img
+        src="https://drive.google.com/uc?export=view&id=1iCEvmUTG1wXexB7qb2dfIQJoIw7eB9-H"
+        alt="icon"
+      />
+    </v-avatar>
+    <v-spacer />
+    <v-menu offset-y>
+      <template v-slot:activator="{ on }">
+        <v-btn text v-on="on">
+          <span class="mr-2">もっと見る</span>
+        </v-btn>
+      </template>
+      <v-list>
+        <v-list-item v-for="(page, index) in responsivePages" :key="index" @click="transitionPage(page.link)">
+          <v-list-item-title>{{ page.title }}</v-list-item-title>
+        </v-list-item>
+      </v-list>
+    </v-menu>
+  </v-app-bar>
+  <v-app-bar v-else app>
     <v-avatar color="grey lighten-2">
       <img
         src="https://drive.google.com/uc?export=view&id=1iCEvmUTG1wXexB7qb2dfIQJoIw7eB9-H"
@@ -71,6 +92,16 @@ export default {
         "お問い合わせ / contact"
       ],
       pages: [
+        { title: "プロフィール", link: "/profile" },
+        { title: "ギャラリー", link: "/gallery" },
+        { title: "設定", link: "/config" },
+        { title: "ログアウト", link: "logout" }
+      ],
+      responsivePages: [
+        { title: "ホーム", link: "/home" },
+        { title: "カレンダー", link: "/calendar" },
+        { title: "bot", link: "/bot" },
+        { title: "アクティビティ", link: "/activity" },
         { title: "プロフィール", link: "/profile" },
         { title: "ギャラリー", link: "/gallery" },
         { title: "設定", link: "/config" },
