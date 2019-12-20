@@ -10,58 +10,24 @@
 
           <!--メインコンテンツ-->
           <v-flex xs12 sm9 md9 order-md2 order-sm2>
-            <v-card dark tile flat color="#FFFFFF" class="main-content pa-2">
-              <!--掲示板-->
-              <v-flex xs12>
-                <v-card dark color="brown lighten-4">
-                  <v-list-item three-line>
-                    <v-list-item-content class="align-self-start">
-                      <v-list-item-title class="headline mb-2">運営からのお知らせ！</v-list-item-title>
-                      <v-list-item-subtitle>使い方講座 ①</v-list-item-subtitle>
-                    </v-list-item-content>
-                    <v-list-item-avatar size="120" tile>
-                      <img
-                        src="https://drive.google.com/uc?export=view&id=1HXcdxdYu_0BO8nSJEyljvJbTE3owLBKU"
-                      />
-                    </v-list-item-avatar>
-                  </v-list-item>
+            <v-container id="scroll-target" class="overflow-y-auto">
+              <v-row v-scroll:#scroll-target="onScroll" align="top" justify="center">
+                <p class="ma-2">{{200}} Activities</p>
+                <v-card color="#FFFFFF" class="pr-5 z-bot" max-height="100vh">
+                  <v-timeline>
+                    <v-timeline-item v-for="n in 200" :key="n" class="ma-2" small>
+                      <template v-slot:opposite>
+                        <span :class="`headline font-weight-bold cyan--text`" v-text="'11, dec'" />
+                      </template>
+                      <div class="py-4">
+                        <h2 :class="`headline font-weight-light mb-4 cyan--text`">Lorem ipsum</h2>
+                        <div>Lorem ipsum dolor sit amet, no nam oblique veritus. Commune scaevola imperdiet nec ut, sed euismod convenire principes at. Est et nobis iisque percipit, an vim zril disputando voluptatibus, vix an salutandi sententiae.</div>
+                      </div>
+                    </v-timeline-item>
+                  </v-timeline>
                 </v-card>
-              </v-flex>
-
-              <v-container grid-list-md text-center>
-                <v-layout row wrap>
-                  <!--ガントチャート&bot-->
-                  <v-flex v-for="item in item" :key="`6${item}`" xs12 md6>
-                    <v-card :color="item.color" dark>
-                      <v-list-item three-line>
-                        <v-list-item-content class="align-self-start">
-                          <v-list-item-title class="headline mb-2" v-text="item.title" />
-                          <v-list-item-subtitle v-text="item.artist" />
-                        </v-list-item-content>
-                        <v-list-item-avatar size="180" tile>
-                          <v-img :src="item.src" />
-                        </v-list-item-avatar>
-                      </v-list-item>
-                    </v-card>
-                  </v-flex>
-
-                  <!--成績&ギャラリー-->
-                  <v-flex v-for="item2 in item2" :key="`6${item2}`" xs12 md6>
-                    <v-card :color="item2.color" dark>
-                      <v-list-item three-line>
-                        <v-list-item-content class="align-self-start">
-                          <v-list-item-title class="headline mb-2" v-text="item2.title" />
-                          <v-list-item-subtitle v-text="item2.artist" />
-                        </v-list-item-content>
-                        <v-list-item-avatar size="180" tile>
-                          <v-img :src="item2.src" />
-                        </v-list-item-avatar>
-                      </v-list-item>
-                    </v-card>
-                  </v-flex>
-                </v-layout>
-              </v-container>
-            </v-card>
+              </v-row>
+            </v-container>
           </v-flex>
         </v-layout>
       </v-container>

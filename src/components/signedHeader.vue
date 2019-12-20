@@ -118,7 +118,7 @@ export default {
   },
   mounted() {
     setInterval(() => {
-      console.log(this.select);
+      // console.log(this.select);
     }, 500);
   },
   methods: {
