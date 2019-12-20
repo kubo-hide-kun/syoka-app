@@ -13,17 +13,19 @@
             <v-container id="scroll-target" class="overflow-y-auto">
               <v-row v-scroll:#scroll-target="onScroll" align="top" justify="center">
                 <p class="ma-2">{{200}} Activities</p>
-                <v-timeline>
-                  <v-timeline-item v-for="n in 200" :key="n" class="ma-2" small>
-                    <template v-slot:opposite>
-                      <span :class="`headline font-weight-bold cyan--text`" v-text="1123" />
-                    </template>
-                    <div class="py-4">
-                      <h2 :class="`headline font-weight-light mb-4 cyan--text`">Lorem ipsum</h2>
-                      <div>Lorem ipsum dolor sit amet, no nam oblique veritus. Commune scaevola imperdiet nec ut, sed euismod convenire principes at. Est et nobis iisque percipit, an vim zril disputando voluptatibus, vix an salutandi sententiae.</div>
-                    </div>
-                  </v-timeline-item>
-                </v-timeline>
+                <v-card color="#FFFFFF" class="pr-5 z-bot" max-height="100vh">
+                  <v-timeline>
+                    <v-timeline-item v-for="n in 200" :key="n" class="ma-2" small>
+                      <template v-slot:opposite>
+                        <span :class="`headline font-weight-bold cyan--text`" v-text="'11, dec'" />
+                      </template>
+                      <div class="py-4">
+                        <h2 :class="`headline font-weight-light mb-4 cyan--text`">Lorem ipsum</h2>
+                        <div>Lorem ipsum dolor sit amet, no nam oblique veritus. Commune scaevola imperdiet nec ut, sed euismod convenire principes at. Est et nobis iisque percipit, an vim zril disputando voluptatibus, vix an salutandi sententiae.</div>
+                      </div>
+                    </v-timeline-item>
+                  </v-timeline>
+                </v-card>
               </v-row>
             </v-container>
           </v-flex>
