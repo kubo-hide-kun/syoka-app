@@ -163,15 +163,16 @@ export default {
       console.log(this.title)
       console.log(uid)
       let record = firebase.firestore().collection('users').doc(uid);
-
         record.get().then((reco)=>{
             if (reco.exists) {
                 console.log( reco.data().name );
                 name = reco.data().name
                 if(!des) {
                     firebase.firestore().collection('projects').doc(title).set({[uid]:name,title: title})
+                    projects.push({title:title})
                 }else{
                     firebase.firestore().collection('projects').doc(title).set({[uid]:name,title: title,description:des})
+                    projects.push({title:title})
                 }
             }
             else {
