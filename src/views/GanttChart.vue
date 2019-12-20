@@ -16,7 +16,7 @@
       </div>
     </div>
     <FullCalendar
-      v-if="isGanttChart"
+      v-if="isGanttChart && isFinishLoad"
       class="demo-app-calendar"
       ref="fullGanttChart"
       defaultView="resourceTimelineMonth"
@@ -33,7 +33,7 @@
       :resources="calendarResources"
       @eventClick="handleEventClick"
     />
-    <div v-else>
+    <div v-else-if="isFinishLoad">
       <FullCalendar
         class="demo-app-calendar"
         ref="fullCalendar"
@@ -179,6 +179,7 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import resourceTimelinePlugin from "@fullcalendar/resource-timeline";
 import interactionPlugin from "@fullcalendar/interaction";
+import firebase from '../fire';
 
 // must manually include stylesheets for each plugin
 import "@fullcalendar/core/main.css";
@@ -188,6 +189,17 @@ import "@fullcalendar/timeline/main.css";
 import "@fullcalendar/resource-timeline/main.css";
 
 import TaskCreateForm from "../components/TaskCreateForm";
+
+let uid = localStorage.getItem('uid');
+let pro = localStorage.getItem('project');
+let record = firebase.firestore().collection('users').doc(uid);
+let name = "";
+record.get().then((reco)=> {
+    if (reco.exists) {
+        console.log(reco.data().name);
+        name = reco.data().name
+    }
+});
 
 export default {
   components: {
@@ -209,9 +221,10 @@ export default {
       limitTime: null,
       endDay: false,
       endTime: false,
-      isGanttChart: 0,
+      isGanttChart: false,
       isMobileView: false,
       isEditing: false,
+      isFinishLoad: false,
       calendarPlugins: [
         // plugins must be defined in the JS
         dayGridPlugin,
@@ -227,7 +240,7 @@ export default {
       calendarEvents: [
         // initial event mock data
         {
-          id: "0i0",
+          id: "a",
           title: "Event Now",
           discription: "sample text",
           progress: 50,
@@ -247,9 +260,39 @@ export default {
           resourceIds: ["窪田", "鳥越"],
           tags: ["Python"]
         }
-      ]
-    };
-  },
+      ]};
+    },
+    // watch: {
+    //     calendarEvents: () => {
+    //         console.log("wa");
+    //         console.log(data);
+    //         isGanttChart = !isGanttChart;
+    //         $nextTick(() => (isGanttChart = !isGanttChart));
+    //     }
+    // },
+    beforeCreate () {
+        let citiesRef = firebase.firestore().collection('tasks');
+        citiesRef.get()
+            .then(snapshot => {
+                snapshot.forEach(doc => {
+                      console.log(doc.data());
+                      this.calendarEvents.push({
+                          title:doc.data().title,
+                          discription:doc.data().discription,
+                          progres:doc.data().progres,
+                          start:new Date(doc.data().start.seconds*1000),
+                          end:new Date(doc.data().end.seconds*1000),
+                          resourceIds:[doc.data().resourceIds],
+                          tags:doc.data().tags
+                      });
+                });
+                this.isFinishLoad = true;
+            })
+            .catch(err => {
+                console.log('Error getting documents', err);
+            });
+
+    },
   methods: {
     handleEventClick(arg) {
       this.id = arg.event.id;

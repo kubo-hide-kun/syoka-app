@@ -122,7 +122,7 @@
 <script>
 import firebase from '../fire';
 let uid = localStorage.getItem('uid');
-let name = ""
+let name = "";
 export default {
   data() {
     return {
@@ -142,7 +142,6 @@ export default {
     citiesRef.get()
     .then(snapshot => {
         snapshot.forEach(doc => {
-            console.log(doc.id, '=>', doc.data());
             if(doc.data()[uid]){
                 projects.push({title:doc.data().title})
             }
@@ -154,7 +153,8 @@ export default {
   },
   methods: {
     choiceProjects(project) {
-      console.log(project.title);
+      console.log(project.title);　
+      localStorage.setItem('project',project.title);
     },
     post() {
       let title = this.title
