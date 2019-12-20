@@ -60,7 +60,7 @@
                                                 </template>
                                                 <v-card>
                                                     <v-card-title class="headline">新規登録！</v-card-title>
-                                                    <v-text-field label="Name*" required class="mr-5 ml-5" />
+                                                    <v-text-field label="Name*" v-model="name" required class="mr-5 ml-5" />
                                                     <v-text-field label="Email*" v-model="email" required class="mr-5 ml-5" />
                                                     <v-text-field
                                                             v-model="pass"
@@ -150,7 +150,7 @@
 </template>
 
 <script>
-    import firebase from 'firebase'
+    import firebase from '../fire'
     export default {
         methods: {
             cleateaccount: function () {
@@ -158,6 +158,9 @@
                 firebase.auth().createUserWithEmailAndPassword(this.email, this.pass)
                     .then(user => {
                         alert('Create account: ', this.email)
+                        firebase.firestore().collection('users').doc(user.user.uid).set({
+                          name : this.name
+                        })
                     })
                     .catch(error => {
                         alert(error.message)
@@ -166,7 +169,8 @@
             signIn: function () {
                 firebase.auth().signInWithEmailAndPassword(this.email, this.pass)
                     .then(user => {
-                        console.log("成功")
+                        console.log(user.user.uid)
+                        localStorage.setItem('uid', user.user.uid)
                         this.$router.push('/home')
                     })
                     .catch(err => {
