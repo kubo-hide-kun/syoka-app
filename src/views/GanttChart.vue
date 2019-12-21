@@ -239,10 +239,7 @@ export default {
         resourceTimelinePlugin
       ],
       calendarWeekends: true,
-      calendarResources: [
-        { title: "resource a", id: "窪田" },
-        { title: "resource b", id: "　鳥越" }
-      ],
+      calendarResources: [],
       calendarEvents: [
         // initial event mock data
         {
@@ -273,10 +270,9 @@ export default {
   },
   beforeCreate() {
     let citiesRef = firebase.firestore().collection("tasks");
-    citiesRef
-      .get()
-      .then(snapshot => {
-        snapshot.forEach(doc => {
+    citiesRef.get().then(snapshot => {
+      snapshot
+        .forEach(doc => {
           let limit = doc.data().end.seconds - doc.data().start.seconds;
 
           let time = new Date().getTime();
@@ -301,15 +297,27 @@ export default {
             enjoud: enjoud
           });
           console.log(this.calendarEvents);
+        })
+        .catch(err => {
+          console.log("Error getting documents", err);
+        });
+    });
+    let userRef = firebase.firestore().collection("users");
+    userRef
+      .get()
+      .then(snapshot => {
+        snapshot.forEach(doc => {
+          console.log(doc.data().name);
+          this.calendarResources.push({
+            title: doc.data().name,
+            id: doc.data().name
+          });
         });
         this.isFinishLoad = true;
       })
       .catch(err => {
         console.log("Error getting documents", err);
       });
-  },
-  watch: {
-    progress: () => console.log(this)
   },
   methods: {
     handleEventClick(arg) {
