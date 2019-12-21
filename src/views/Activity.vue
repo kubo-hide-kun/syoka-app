@@ -12,15 +12,15 @@
           <v-flex xs12 sm9 md9 order-md2 order-sm2>
             <v-container id="scroll-target" class="overflow-y-auto">
               <v-row v-scroll:#scroll-target="onScroll" align="top" justify="center">
-                <p class="ma-2">{{200}} Activities</p>
+                <!--<p class="ma-2">{{200}} Activities</p>-->
                 <v-card color="#FFFFFF" class="pr-5 z-bot" max-height="100vh">
                   <v-timeline>
                     <v-timeline-item v-for="n in logs" :key="n.id" class="ma-2" small>
                       <template v-slot:opposite>
-                        <span :class="`headline font-weight-bold cyan--text`" v-text="'11, dec'" />
+                        <!--<span :class="`headline font-weight-bold cyan&#45;&#45;text`" v-text="'11, dec'" />-->
                       </template>
                       <div class="py-4">
-                        <h2 :class="`headline font-weight-light mb-4 cyan--text`">{{n.title}}</h2>
+                        <h2 :class="`headline font-weight-light mb-4 cyan--text`">{{n.title}}への変更がありました</h2>
                         <div> {{n.naiyou}} </div>
                       </div>
                     </v-timeline-item>
@@ -78,20 +78,26 @@ export default {
     ]
   }),
   created (){
-      let logdate = this.log
+      let logdate = this.logs;
       let citiesRef = firebase.firestore().collection('activity');
       let i = 0;
       citiesRef.get()
           .then(snapshot => {
               snapshot.forEach(doc => {
-                  this.calendarEvents.push({
-                      id:i,
-                      title:doc.data().title + "へ変更が加えられました",
-                      naiyou:doc.date()
-                  })
+                  console.log(doc.data());
+                  logdate.push({
+                       id:i,
+                       title:doc.data().title,
+                       naiyou:doc.data()
+                   });
                   i++
               })
           })
+          .catch(err => {
+              console.log('Error getting documents', err);
+          });
+      console.log(logdate)
+
 
   }
 };
