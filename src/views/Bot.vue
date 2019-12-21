@@ -22,7 +22,7 @@
                 <v-container id="scroll-target" style="max-height: 75vh" class="overflow-y-auto">
                   <v-row v-scroll:#scroll-target="onScroll" align="top" justify="center">
                     <v-timeline dense>
-                      <v-timeline-item v-for="n in 7" :key="n">
+                      <v-timeline-item v-for="n in items" :key="n.id">
                         <template v-slot:icon>
                           <v-avatar size="75" tile>
                             <img
@@ -32,8 +32,8 @@
                         </template>
                         <span slot="opposite">Tus eu perfecto</span>
                         <v-card class="elevation-2">
-                          <v-card-title class="headline">Lorem ipsum</v-card-title>
-                          <v-card-text>Lorem ipsum dolor sit amet, no nam oblique veritus. Commune scaevola imperdiet nec ut, sed euismod convenire principes at. Est et nobis iisque percipit, an vim zril disputando voluptatibus, vix an salutandi sententiae.</v-card-text>
+                          <v-card-title class="headline">{{n.title}}</v-card-title>
+                          <v-card-text>{{n.naiyou}}</v-card-text>
                         </v-card>
                       </v-timeline-item>
                     </v-timeline>
@@ -68,6 +68,8 @@
 
 <script>
 import ProjectList from "../components/ProjectList";
+import firebase from '../fire';
+
 
 export default {
   components: {
@@ -94,7 +96,9 @@ export default {
         "mdi-emoticon-neutral",
         "mdi-emoticon-sad",
         "mdi-emoticon-tongue"
-      ]
+      ],
+      //items: [{id:0,title:"gggg",naiyou:"geowigajwgoi"}]　こんな感じに
+      items:[]
     };
   },
 
@@ -130,6 +134,9 @@ export default {
     sendMessage() {
       this.resetIcon();
       this.clearMessage();
+      let mess = this.message;
+      //mess = プロジェクト名と考える
+      let record = firebase.firestore().collection('projects').doc(mess).get;
     },
     clearMessage() {
       this.message = "";

@@ -249,6 +249,7 @@ export default {
           start: new Date("November 9, 2019 9:00:00"),
           end: new Date("November 9, 2019 18:08:00"),
           resourceIds: ["窪田"],
+          project:"tst",
           tags: ["js", "Markdown"]
         },
         // initial event mock data
@@ -257,6 +258,7 @@ export default {
           discription: "default text",
           title: "Event Now2",
           progress: 25.0,
+          project:"test",
           start: new Date("October 9, 2019 9:00:00"),
           end: new Date("October 9, 2019 18:09:00"),
           resourceIds: ["窪田", "鳥越"],
@@ -284,7 +286,7 @@ export default {
                     let keika = doc.data().end.seconds - Math.floor( time / 1000 )
 
                     let sisu = (limit * (doc.data().progress / keika / 100)-1)
-                    let enjoud = (-1*sisu) +0.1
+                    let enjoud = ((-1*sisu) +0.1)*100
 
 
                     console.log(sisu)
@@ -293,12 +295,13 @@ export default {
                           id:doc.id,
                           title:doc.data().title,
                           discription:doc.data().discription,
+                          project:doc.data().project,
                           progres:doc.data().progress,
                           start:new Date(doc.data().start.seconds*1000),
                           end:new Date(doc.data().end.seconds*1000),
                           resourceIds:[doc.data().resourceIds],
                           tags:doc.data().tags,
-                          enjoud: enjoud*100
+                          enjoud: enjoud
                       });
                     console.log(this.calendarEvents);
                 });
@@ -337,7 +340,9 @@ export default {
         this.tags = this.calendarEvents.filter(
           event => event.id == arg.event.id
         )[0].tags;
-
+        this.project = this.calendarEvents.filter(
+            event => event.id == arg.event.id
+        )[0].project
       this.limitDate =
         arg.event.end.getFullYear() +
         "-" +
@@ -368,26 +373,30 @@ export default {
 
         let sisu = (limit * (this.progress / keika / 100)-1)
 
-        let enjoud = (-1*sisu) +0.1
-        if(enjoud<0){enjoud=0.01}
-        if(enjoud>1){enjoud=0.99}
+        let enjoud = ((-1*sisu) +0.1)*100
+        if(enjoud <= 0){enjoud=0.01}
+        if(enjoud >= 100){enjoud=99}
         console.log(enjoud)
 
 
       const postDatas = {
         title: this.title,
         progress: this.progress,
+        project: this.project,
         description: this.description,
         start: this.start,
         end: this.end,
         resourceIds: this.resourceIds,
         tags: this.tags,
-        enjoud:enjoud*100
+        enjoud:enjoud
       };
 
         firebase.firestore().collection('tasks').doc(key).set(postDatas)
         firebase.firestore().collection('activity').add(postDatas)
+        if(enjoud>=70){
+            firebase.firestore().collection('projects').doc(this.project).set({fireflag:true})
 
+        }
         console.log(postDatas);
 
 
