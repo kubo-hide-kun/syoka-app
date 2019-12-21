@@ -66,6 +66,8 @@
 
 <script>
 import ProjectList from "../components/ProjectList";
+import firebase from '../fire';
+
 
 export default {
   components: {
@@ -137,6 +139,9 @@ export default {
     sendMessage() {
       this.resetIcon();
       this.clearMessage();
+      let mess = this.message;
+      //mess = プロジェクト名と考える
+      let record = firebase.firestore().collection('projects').doc(mess).get;
     },
     clearMessage() {
       this.message = "";

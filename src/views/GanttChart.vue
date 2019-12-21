@@ -253,6 +253,7 @@ export default {
           start: new Date("November 9, 2019 9:00:00"),
           end: new Date("November 9, 2019 18:08:00"),
           resourceIds: ["窪田"],
+          project:"tst",
           tags: ["js", "Markdown"]
         },
         // initial event mock data
@@ -261,6 +262,7 @@ export default {
           discription: "default text",
           title: "Event Now2",
           progress: 25.0,
+          project:"test",
           start: new Date("October 9, 2019 9:00:00"),
           end: new Date("October 9, 2019 18:09:00"),
           resourceIds: ["窪田", "鳥越"],
@@ -358,6 +360,7 @@ export default {
       const postDatas = {
         title: this.title,
         progress: this.progress,
+        project: this.project,
         description: this.description,
         start: this.start,
         end: this.end,
