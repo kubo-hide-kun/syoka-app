@@ -1,36 +1,32 @@
 <template>
   <v-app>
-    <v-app-bar app>
-      <v-toolbar-title class="headline text-uppercase">
-        <span>Vuetify</span>
-        <span class="font-weight-light">MATERIAL DESIGN</span>
-      </v-toolbar-title>
-      <v-spacer></v-spacer>
-      <v-btn
-        text
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
-        target="_blank"
-      >
-        <span class="mr-2">Latest Release</span>
-      </v-btn>
-    </v-app-bar>
-
+    <SignedHeader v-if="this.$store.state.signed" />
+    <Header v-else />
     <v-content>
-      <HelloWorld/>
+      <transition name="page">
+        <router-view />
+      </transition> 
     </v-content>
   </v-app>
+
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld';
-
+import Header from "./components/Header";
+import SignedHeader from "./components/signedHeader";
+if(!localStorage.getItem('uid')){
+    localStorage.setItem('uid',"1");
+    localStorage.setItem('project',"1");
+    window.location.href = '/';
+};
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    HelloWorld,
+    SignedHeader,
+    Header
   },
   data: () => ({
     //
-  }),
+  })
 };
 </script>
