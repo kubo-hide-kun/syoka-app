@@ -10,6 +10,8 @@ import GanttChart from './views/GanttChart.vue'
 
 Vue.use(Router)
 
+
+
 export default new Router({
   mode: 'history',
   base: process.env.BASE_URL,
@@ -19,7 +21,6 @@ export default new Router({
       name: 'login',
       component: Login
     },
-
     {
       path: '/home',
       name: 'home',

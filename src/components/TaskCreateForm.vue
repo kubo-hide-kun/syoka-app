@@ -86,23 +86,36 @@
 import Vue from "vue";
 import mavonEditor from "mavon-editor";
 import "mavon-editor/dist/css/index.css";
+import firebase from '../fire';
 Vue.use(mavonEditor);
 
+
+let uid = localStorage.getItem('uid');
+let pro = localStorage.getItem('project');
+
+let record = firebase.firestore().collection('users').doc(uid);
+let name = "";
+record.get().then((reco)=> {
+    if (reco.exists) {
+        console.log(reco.data().name);
+        name = reco.data().name
+    }
+});
 export default {
-  data() {
-    return {
-      dialog: false,
-      title: "",
-      description: "",
-      limitDate: new Date().toISOString().substr(0, 10),
-      limitTime: null,
-      endDay: false,
-      endTime: false,
-      resourceIds: [],
-      tags: []
-    };
-  },
-  methods: {
+    data() {
+        return {
+            dialog: false,
+            title: "",
+            description: "",
+            limitDate: new Date().toISOString().substr(0, 10),
+            limitTime: null,
+            endDay: false,
+            endTime: false,
+            resourceIds: [],
+            tags: []
+        };
+    },
+    methods: {
     addTag() {
       if (!this.inputTag) return;
       this.tags.push(this.inputTag);
@@ -115,14 +128,17 @@ export default {
     post() {
       this.dialog = false;
       const postDatas = {
-        id: this.title + this.end,
-        title: this.title,
-        description: this.description,
-        start: new Date(),
-        end: new Date(this.limitDate + " " + this.limitTime),
-        resourceIds: this.resourceIds,
-        tags: this.tags
+              project:pro,
+              [uid]: name,
+              title: this.title,
+              description: this.description,
+              start: new Date(),
+              end: new Date(this.limitDate + " " + this.limitTime),
+              resourceIds: name,
+              progress: 0,
+              tags: this.tags
       };
+      firebase.firestore().collection('tasks').add(postDatas)
       console.log(postDatas);
     }
   }
