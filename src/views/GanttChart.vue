@@ -1,12 +1,12 @@
 <template>
-  <div class="demo-app">
+  <div>
     <div>
-      <div class="demo-app-top">
+      <div class="ma-6">
         <TaskCreateForm />
         <v-bottom-navigation :value="isGanttChart" color="deep-purple accent-4">
           <v-btn @click="isGanttChart = 0">
             <span>Calendar</span>
-            <v-icon>mdi- mdi-calendar</v-icon>
+            <v-icon>mdi-calendar</v-icon>
           </v-btn>
           <v-btn @click="isGanttChart = 1">
             <span>GanttChart</span>
@@ -17,12 +17,14 @@
     </div>
     <FullCalendar
       v-if="isGanttChart"
-      class="demo-app-calendar"
+      class="ma-6 "
       ref="fullGanttChart"
       defaultView="resourceTimelineMonth"
       :header="{
-        left: 'prev,next today',
-        center: isMobileView 
+        left: $vuetify.breakpoint.xsOnly
+          ? 'prev,next'
+          : 'prev,next today',
+        center: $vuetify.breakpoint.xsOnly
           ? ''
           : 'title',
         right: 'resourceTimelineDay,resourceTimelineWeek,resourceTimelineMonth'
@@ -35,12 +37,14 @@
     />
     <div v-else>
       <FullCalendar
-        class="demo-app-calendar"
+        class="ma-6 demo-app"
         ref="fullCalendar"
         defaultView="dayGridMonth"
         :header="{
-        left: 'prev,next today',
-        center: isMobileView 
+        left: $vuetify.breakpoint.xsOnly
+          ? 'prev,next'
+          : 'prev,next today',
+        center: $vuetify.breakpoint.xsOnly 
           ? ''
           : 'title',
         right: 'timeGridDay,timeGridWeek,listWeek,dayGridMonth'
@@ -130,16 +134,12 @@
 
       <v-card v-else>
         <v-card-title class="headline">
-          {{title}}
+          {{title}} 達成率: {{21}}%
           <v-spacer />
           <v-btn color="green darken-1" text @click="isEditing = true">編集画面へ</v-btn>
         </v-card-title>
         <div class="ma-6">
-          <v-slider
-            v-model = "progress"
-            max=100
-            label = "完了度(%)"
-          />
+          <v-slider v-model="progress" thumb-label="always" />
           <v-card elevation="2">
             <mavon-editor
               v-model="description"
@@ -159,7 +159,7 @@
           </v-row>
           <div class="chip-list">
             <div v-for="(tag,key) in tags" :key="key" class="tag-chips">
-              <v-chip class="ma-1" small >{{tag}}</v-chip>
+              <v-chip class="ma-1" small>{{tag}}</v-chip>
             </div>
           </div>
           <v-card-actions>
@@ -210,7 +210,6 @@ export default {
       endDay: false,
       endTime: false,
       isGanttChart: 0,
-      isMobileView: false,
       isEditing: false,
       calendarPlugins: [
         // plugins must be defined in the JS
@@ -221,8 +220,8 @@ export default {
       ],
       calendarWeekends: true,
       calendarResources: [
-        { title: "resource a", id: "a" },
-        { title: "resource b", id: "b" }
+        { title: "resource a", id: "窪田" },
+        { title: "resource b", id: "　鳥越" }
       ],
       calendarEvents: [
         // initial event mock data
@@ -247,7 +246,18 @@ export default {
           resourceIds: ["窪田", "鳥越"],
           tags: ["Python"]
         }
-      ]
+      ],
+      config: {
+        defaultView: "agendaWeek",
+        eventLimit: true,
+        nowIndicator: true,
+        slotDuration: "00:15:00",
+        slotLabelInterval: "00:15:00",
+        height: "auto",
+        contentHeight: "auto",
+        slotLabelFormat: "LT",
+        allDayText: "All Day Events"
+      }
     };
   },
   methods: {
@@ -301,14 +311,6 @@ export default {
 <style>
 .demo-app {
   font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
-  font-size: 1rem;
-}
-
-.demo-app-top {
-  margin: 0 60px;
-}
-
-.demo-app-calendar {
-  margin: 60px;
+  font-size: 0.5rem;
 }
 </style>
