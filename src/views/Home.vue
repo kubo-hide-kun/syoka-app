@@ -100,7 +100,7 @@ export default {
       {
         rink: "/Activity",
         color: "#FC785F",
-        title: "UserList",
+        title: "Activity",
         artist: "活動の記録が見れます",
         src:
           "https://drive.google.com/uc?export=view&id=1fV-iYiVnrml6AOGlvAe6iBdMu5z4d_Ot"
