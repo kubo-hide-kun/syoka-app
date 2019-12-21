@@ -22,7 +22,7 @@
                 <v-container id="scroll-target" style="max-height: 75vh" class="overflow-y-auto">
                   <v-row v-scroll:#scroll-target="onScroll" align="top" justify="center">
                     <v-timeline dense>
-                      <v-timeline-item v-for="n in 7" :key="n">
+                      <v-timeline-item v-for="n in responce.length" :key="n" class="ma-6">
                         <template v-slot:icon>
                           <v-avatar size="75" tile>
                             <img
@@ -30,10 +30,8 @@
                             />
                           </v-avatar>
                         </template>
-                        <span slot="opposite">Tus eu perfecto</span>
                         <v-card class="elevation-2">
-                          <v-card-title class="headline">Lorem ipsum</v-card-title>
-                          <v-card-text>Lorem ipsum dolor sit amet, no nam oblique veritus. Commune scaevola imperdiet nec ut, sed euismod convenire principes at. Est et nobis iisque percipit, an vim zril disputando voluptatibus, vix an salutandi sententiae.</v-card-text>
+                          <v-card-text>{{responce[n-1].text}}</v-card-text>
                         </v-card>
                       </v-timeline-item>
                     </v-timeline>
@@ -68,6 +66,8 @@
 
 <script>
 import ProjectList from "../components/ProjectList";
+import firebase from '../fire';
+
 
 export default {
   components: {
@@ -94,6 +94,15 @@ export default {
         "mdi-emoticon-neutral",
         "mdi-emoticon-sad",
         "mdi-emoticon-tongue"
+      ],
+      responce: [
+        {text: "メグルさんにアサインされている仕事が少なく余裕があるようです"},
+        {text: "クボ太郎さんがタスクの進行状況の雲行きが怪しいです。タスクの分散を行いましょう"},
+        {text: "クボ太郎さんの持っているプロジェクトのAの進行状況が怪しいです"},
+        {text: "メグルさんがissueAを完了しました"},
+        {text: "トリッピーさんが新しくチームに加わりました。クボ太郎さんの仕事を分散させましょう。"},
+        {text: "分散によりチーム内のタスクの偏りが解決されました！"},
+        {text: "クボ太郎さんがissueBを完了させました"}
       ]
     };
   },
@@ -130,6 +139,9 @@ export default {
     sendMessage() {
       this.resetIcon();
       this.clearMessage();
+      let mess = this.message;
+      //mess = プロジェクト名と考える
+      let record = firebase.firestore().collection('projects').doc(mess).get;
     },
     clearMessage() {
       this.message = "";

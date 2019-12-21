@@ -1,12 +1,12 @@
 <template>
-  <div class="demo-app">
+  <div>
     <div>
-      <div class="demo-app-top">
+      <div class="ma-6">
         <TaskCreateForm />
         <v-bottom-navigation :value="isGanttChart" color="deep-purple accent-4">
           <v-btn @click="isGanttChart = 0">
             <span>Calendar</span>
-            <v-icon>mdi- mdi-calendar</v-icon>
+            <v-icon>mdi-calendar</v-icon>
           </v-btn>
           <v-btn @click="isGanttChart = 1">
             <span>GanttChart</span>
@@ -17,12 +17,14 @@
     </div>
     <FullCalendar
       v-if="isGanttChart && isFinishLoad"
-      class="demo-app-calendar"
+      class="ma-6"
       ref="fullGanttChart"
       defaultView="resourceTimelineMonth"
       :header="{
-        left: 'prev,next today',
-        center: isMobileView 
+        left: $vuetify.breakpoint.xsOnly
+          ? 'prev,next'
+          : 'prev,next today',
+        center: $vuetify.breakpoint.xsOnly
           ? ''
           : 'title',
         right: 'resourceTimelineDay,resourceTimelineWeek,resourceTimelineMonth'
@@ -35,12 +37,14 @@
     />
     <div v-else-if="isFinishLoad">
       <FullCalendar
-        class="demo-app-calendar"
+        class="ma-6 demo-app"
         ref="fullCalendar"
         defaultView="dayGridMonth"
         :header="{
-        left: 'prev,next today',
-        center: isMobileView 
+        left: $vuetify.breakpoint.xsOnly
+          ? 'prev,next'
+          : 'prev,next today',
+        center: $vuetify.breakpoint.xsOnly 
           ? ''
           : 'title',
         right: 'timeGridDay,timeGridWeek,listWeek,dayGridMonth'
@@ -135,12 +139,8 @@
           <v-btn color="green darken-1" text @click="isEditing = true">編集画面へ</v-btn>
         </v-card-title>
         <div class="ma-6">
-          <v>炎上確率　{{enjoud}}%</v>
-          <v-slider
-            v-model = "progress"
-            max=100
-            label = "完了度(%)"
-          />
+          <v>炎上確率 {{enjoud}}%</v>
+          <v-slider v-model="progress" max="100" label="完了度(%)" thumb-label="always" />
           <v-card elevation="2">
             <mavon-editor
               v-model="description"
@@ -160,7 +160,7 @@
           </v-row>
           <div class="chip-list">
             <div v-for="(tag,key) in tags" :key="key" class="tag-chips">
-              <v-chip class="ma-1" small >{{tag}}</v-chip>
+              <v-chip class="ma-1" small>{{tag}}</v-chip>
             </div>
           </div>
           <v-card-actions>
@@ -180,7 +180,7 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import resourceTimelinePlugin from "@fullcalendar/resource-timeline";
 import interactionPlugin from "@fullcalendar/interaction";
-import firebase from '../fire';
+import firebase from "../fire";
 
 // must manually include stylesheets for each plugin
 import "@fullcalendar/core/main.css";
@@ -191,15 +191,18 @@ import "@fullcalendar/resource-timeline/main.css";
 
 import TaskCreateForm from "../components/TaskCreateForm";
 
-let uid = localStorage.getItem('uid');
-let pro = localStorage.getItem('project');
-let record = firebase.firestore().collection('users').doc(uid);
+let uid = localStorage.getItem("uid");
+let pro = localStorage.getItem("project");
+let record = firebase
+  .firestore()
+  .collection("users")
+  .doc(uid);
 let name = "";
-record.get().then((reco)=> {
-    if (reco.exists) {
-        console.log(reco.data().name);
-        name = reco.data().name
-    }
+record.get().then(reco => {
+  if (reco.exists) {
+    console.log(reco.data().name);
+    name = reco.data().name;
+  }
 });
 let sabun = {};
 
@@ -227,6 +230,7 @@ export default {
       isMobileView: false,
       isEditing: false,
       isFinishLoad: false,
+      enjoud: 0,
       calendarPlugins: [
         // plugins must be defined in the JS
         dayGridPlugin,
@@ -236,8 +240,8 @@ export default {
       ],
       calendarWeekends: true,
       calendarResources: [
-        { title: "resource a", id: "a" },
-        { title: "resource b", id: "b" }
+        { title: "resource a", id: "窪田" },
+        { title: "resource b", id: "　鳥越" }
       ],
       calendarEvents: [
         // initial event mock data
@@ -249,6 +253,7 @@ export default {
           start: new Date("November 9, 2019 9:00:00"),
           end: new Date("November 9, 2019 18:08:00"),
           resourceIds: ["窪田"],
+          project:"tst",
           tags: ["js", "Markdown"]
         },
         // initial event mock data
@@ -257,86 +262,82 @@ export default {
           discription: "default text",
           title: "Event Now2",
           progress: 25.0,
+          project:"test",
           start: new Date("October 9, 2019 9:00:00"),
           end: new Date("October 9, 2019 18:09:00"),
           resourceIds: ["窪田", "鳥越"],
           tags: ["Python"]
         }
-      ]};
-    },
-    // watch: {
-    //     calendarEvents: () => {
-    //         console.log("wa");
-    //         console.log(data);
-    //         isGanttChart = !isGanttChart;
-    //         $nextTick(() => (isGanttChart = !isGanttChart));
-    //     }
-    // },
-    beforeCreate () {
-        let citiesRef = firebase.firestore().collection('tasks');
-        citiesRef.get()
-            .then(snapshot => {
-                snapshot.forEach(doc => {
+      ]
+    };
+  },
+  beforeCreate() {
+    let citiesRef = firebase.firestore().collection("tasks");
+    citiesRef
+      .get()
+      .then(snapshot => {
+        snapshot.forEach(doc => {
+          let limit = doc.data().end.seconds - doc.data().start.seconds;
 
-                    let limit = doc.data().end.seconds - doc.data().start.seconds
+          let time = new Date().getTime();
+          let keika = doc.data().end.seconds - Math.floor(time / 1000);
 
-                    let time = new Date().getTime()
-                    let keika = doc.data().end.seconds - Math.floor( time / 1000 )
+          let sisu = limit * (doc.data().progress / keika / 100) - 1;
+          let enjoud = -1 * sisu + 0.1;
 
-                    let sisu = (limit * (doc.data().progress / keika / 100)-1)
-                    let enjoud = (-1*sisu) +0.1
-
-
-                    console.log(sisu)
-                    console.log(enjoud)
-                      this.calendarEvents.push({
-                          id:doc.id,
-                          title:doc.data().title,
-                          discription:doc.data().discription,
-                          progres:doc.data().progress,
-                          start:new Date(doc.data().start.seconds*1000),
-                          end:new Date(doc.data().end.seconds*1000),
-                          resourceIds:[doc.data().resourceIds],
-                          tags:doc.data().tags,
-                          enjoud: enjoud*100
-                      });
-                    console.log(this.calendarEvents);
-                });
-                this.isFinishLoad = true;
-
-            })
-            .catch(err => {
-                console.log('Error getting documents', err);
-            });
-    },
+          console.log(sisu);
+          console.log(enjoud);
+          this.enjoud = enjoud;
+          this.calendarEvents.push({
+            id: doc.id,
+            title: doc.data().title,
+            discription: doc.data().discription,
+            progres: doc.data().progress,
+            start: new Date(doc.data().start.seconds * 1000),
+            end: new Date(doc.data().end.seconds * 1000),
+            resourceIds: [doc.data().resourceIds],
+            tags: doc.data().tags,
+            enjoud: enjoud * 100
+          });
+          console.log(this.calendarEvents);
+        });
+        this.isFinishLoad = true;
+      })
+      .catch(err => {
+        console.log("Error getting documents", err);
+      });
+  },
+  watch: {
+    progress: () => console.log(this)
+  },
   methods: {
     handleEventClick(arg) {
-        sabun = {
-            title: arg.event.title,
-            progress: arg.event.progress,
-            description: arg.event.description,
-            start: arg.event.start,
-            end: arg.event.end,
-            resourceIds: arg.event.resourceIds,
-            tags: arg.event.tags
-        };
-        this.id = arg.event.id;
-        this.enjoud = this.calendarEvents.filter(
-            event => event.id == arg.event.id
-        )[0].enjoud;
-        this.title = arg.event.title;
-        this.progress = this.calendarEvents.filter(
-          event => event.id == arg.event.id
-        )[0].progress;
-        this.description = this.calendarEvents.filter(
-          event => event.id == arg.event.id
-        )[0].discription;
-        this.start = arg.event.start;
-        this.end = arg.event.end;
-        this.resourceIds = arg.event._def.resourceIds;
-        this.tags = this.calendarEvents.filter(
-          event => event.id == arg.event.id
-        )[0].tags;
+      sabun = {
+        title: arg.event.title,
+        progress: arg.event.progress,
+        description: arg.event.description,
+        start: arg.event.start,
+        end: arg.event.end,
+        resourceIds: arg.event.resourceIds,
+        tags: arg.event.tags
+      };
+      this.id = arg.event.id;
+      this.enjoud = this.calendarEvents.filter(
+        event => event.id == arg.event.id
+      )[0].enjoud;
+      this.title = arg.event.title;
+      this.progress = this.calendarEvents.filter(
+        event => event.id == arg.event.id
+      )[0].progress;
+      this.description = this.calendarEvents.filter(
+        event => event.id == arg.event.id
+      )[0].discription;
+      this.start = arg.event.start;
+      this.end = arg.event.end;
+      this.resourceIds = arg.event._def.resourceIds;
+      this.tags = this.calendarEvents.filter(
+        event => event.id == arg.event.id
+      )[0].tags;
 
       this.limitDate =
         arg.event.end.getFullYear() +
@@ -349,48 +350,36 @@ export default {
         ":" +
         ("00" + arg.event.end.getMinutes()).slice(-2);
       this.dialog = true;
-
     },
     post() {
       this.dialog = false;
       this.isEditing = false;
-      let key = this.id
-      console.log(this.id)
-
-
-        let end = this.end.getTime()
-        let endsecond = Math.floor( end / 1000 )
-        let start = this.start.getTime()
-        let startsecond = Math.floor( start / 1000 )
-        let limit = endsecond-startsecond
-        let time = new Date().getTime()
-        let keika = endsecond - Math.floor( time / 1000 )
-
-        let sisu = (limit * (this.progress / keika / 100)-1)
-
-        let enjoud = (-1*sisu) +0.1
-        if(enjoud<0){enjoud=0.01}
-        if(enjoud>1){enjoud=0.99}
-        console.log(enjoud)
-
+      let key = this.id;
+      console.log(this.id);
 
       const postDatas = {
         title: this.title,
         progress: this.progress,
+        project: this.project,
         description: this.description,
         start: this.start,
         end: this.end,
         resourceIds: this.resourceIds,
         tags: this.tags,
-        enjoud:enjoud*100
+        enjoud: this.enjoud
       };
 
-        firebase.firestore().collection('tasks').doc(key).set(postDatas)
-        firebase.firestore().collection('activity').add(postDatas)
+      firebase
+        .firestore()
+        .collection("tasks")
+        .doc(key)
+        .set(postDatas);
+      firebase
+        .firestore()
+        .collection("activity")
+        .add(postDatas);
 
-        console.log(postDatas);
-
-
+      console.log(postDatas);
     }
   }
 };
@@ -399,14 +388,6 @@ export default {
 <style>
 .demo-app {
   font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
-  font-size: 1rem;
-}
-
-.demo-app-top {
-  margin: 0 60px;
-}
-
-.demo-app-calendar {
-  margin: 60px;
+  font-size: 0.5rem;
 }
 </style>
