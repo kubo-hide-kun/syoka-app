@@ -88,8 +88,11 @@ import mavonEditor from "mavon-editor";
 import "mavon-editor/dist/css/index.css";
 import firebase from '../fire';
 Vue.use(mavonEditor);
+
+
 let uid = localStorage.getItem('uid');
 let pro = localStorage.getItem('project');
+
 let record = firebase.firestore().collection('users').doc(uid);
 let name = "";
 record.get().then((reco)=> {
