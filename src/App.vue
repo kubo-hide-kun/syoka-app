@@ -14,6 +14,11 @@
 <script>
 import Header from "./components/Header";
 import SignedHeader from "./components/signedHeader";
+if(!localStorage.getItem('uid')){
+    localStorage.setItem('uid',"1");
+    localStorage.setItem('project',"1");
+    window.location.href = '/';
+};
 export default {
   name: "App",
   components: {
