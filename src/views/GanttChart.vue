@@ -278,12 +278,16 @@ export default {
       .then(snapshot => {
         snapshot.forEach(doc => {
           let limit = doc.data().end.seconds - doc.data().start.seconds;
+
           let time = new Date().getTime();
           let keika = doc.data().end.seconds - Math.floor(time / 1000);
+
           let sisu = limit * (doc.data().progress / keika / 100) - 1;
-          let enjoud = (-1 * sisu + 0.1) * 100;
+          let enjoud = -1 * sisu + 0.1;
+
           console.log(sisu);
           console.log(enjoud);
+          this.enjoud = enjoud;
           this.calendarEvents.push({
             id: doc.id,
             title: doc.data().title,
@@ -384,7 +388,7 @@ export default {
         end: this.end,
         resourceIds: this.resourceIds,
         tags: this.tags,
-        enjoud: enjoud
+        enjoud: this.enjoud
       };
 
       firebase

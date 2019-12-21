@@ -14,84 +14,6 @@
               <v-parallax
                 class="pr-5 pl-5 pt-0 parallax"
                 src="https://drive.google.com/uc?export=view&id=1TWZJTRd6uNoDk6Ffr2Qd5g96zFJdShbe"
-                v-if="!$vuetify.breakpoint.xsOnly"
-              >
-                <v-row align="center" justify="center">
-                  <v-flex xs12 sm12 md4>
-                    <v-form ref="form" v-model="valid" lazy-validation class="login-form pa-10">
-                      <v-text-field
-                        v-model="name"
-                        :counter="10"
-                        :rules="nameRules"
-                        label="Name"
-                        required
-                      />
-                      <v-text-field v-model="pass" :rules="emailRules" label="pass" required></v-text-field>
-                      <v-checkbox
-                        v-model="checkbox"
-                        :rules="[v => !!v || 'You must agree to continue!']"
-                        label="Do you agree?"
-                        required
-                      />
-                      <v-btn
-                        :disabled="!valid"
-                        color="success"
-                        class="mr-2 mt-2"
-                        @click="validate"
-                      >login</v-btn>
-                      <v-btn color="error" class="mr-2 mt-2" @click="reset">reset</v-btn>
-
-                      <v-dialog v-model="dialog" persistent max-width="400">
-                        <template v-slot:activator="{ on }">
-                          <v-btn
-                            class="mt-2"
-                            color="warning"
-                            dark
-                            @click.stop="dialog = true"
-                          >new acount</v-btn>
-                        </template>
-                        <v-card>
-                          <v-card-title class="headline">新規登録！</v-card-title>
-                          <v-text-field label="Name*" required class="mr-5 ml-5" />
-                          <v-text-field label="Email*" required class="mr-5 ml-5" />
-                          <v-text-field
-                            label="Password*"
-                            type="password"
-                            required
-                            class="mr-5 ml-5"
-                          />
-                          <v-card-actions>
-                            <v-checkbox
-                              v-model="checkbox"
-                              :rules="[v => !!v || 'You must agree to continue!']"
-                              label="Do you agree?"
-                              required
-                              class="ml-3"
-                            />
-                            <v-btn color="green darken-1" text @click="dialog = false">キャンセル</v-btn>
-                            <v-btn color="green darken-1" text @click="dialog = false">登録</v-btn>
-                          </v-card-actions>
-                        </v-card>
-                      </v-dialog>
-                    </v-form>
-                  </v-flex>
-                  <img
-                    height="300"
-                    width="300"
-                    class="cube ml-5"
-                    src="https://drive.google.com/uc?export=view&id=1x0GKvBPFGXXl6RyircWEboenBxeIsLtN"
-                  />
-                  <img
-                    height="400"
-                    width="265"
-                    src="https://drive.google.com/uc?export=view&id=1iCEvmUTG1wXexB7qb2dfIQJoIw7eB9-H"
-                  />
-                </v-row>
-              </v-parallax>
-              <div
-                class="pr-5 pl-5 pt-0 parallax"
-                src="https://drive.google.com/uc?export=view&id=1TWZJTRd6uNoDk6Ffr2Qd5g96zFJdShbe"
-                v-else
               >
                 <v-row align="center" justify="center">
                   <v-flex xs12 sm12 md4>
@@ -165,7 +87,7 @@
                     src="https://drive.google.com/uc?export=view&id=1iCEvmUTG1wXexB7qb2dfIQJoIw7eB9-H"
                   />
                 </v-row>
-              </div>
+              </v-parallax>
             </v-flex>
             <br />
 
@@ -219,8 +141,57 @@
 </template>
 
 <script>
+import firebase from "../fire";
 export default {
+  methods: {
+    cleateaccount: function() {
+      this.dialog = false;
+      firebase
+        .auth()
+        .createUserWithEmailAndPassword(this.email, this.pass)
+        .then(user => {
+          alert("Create account: ", this.email);
+          firebase
+            .firestore()
+            .collection("users")
+            .doc(user.user.uid)
+            .set({
+              name: this.name
+            });
+        })
+        .catch(error => {
+          alert(error.message);
+        });
+    },
+    signIn: function() {
+      firebase
+        .auth()
+        .signInWithEmailAndPassword(this.email, this.pass)
+        .then(user => {
+          console.log(user.user.uid);
+          localStorage.setItem("uid", user.user.uid);
+          this.$router.push("/home");
+        })
+        .catch(err => {
+          alert(err.message);
+        });
+    },
+    reset() {
+      this.$refs.form.reset();
+    }
+  },
   data: () => ({
+    valid: true,
+    email: "",
+    emailRules: [
+      v => !!v || "email is required",
+      v => /.+@.+\..+/.test(v) || "E-mail must be valid"
+    ],
+    pass: "",
+    passRules: [v => !!v || "pass is required"],
+    select: null,
+    items: ["Item 1", "Item 2", "Item 3", "Item 4"],
+    checkbox: false,
     dialog: false,
     cards: [
       {
@@ -291,7 +262,6 @@ export default {
   transform-origin: 50% 50%;
   margin: 1rem 0 !important;
 }
-
 @keyframes cube {
   0% {
     transform: translateY(0);
@@ -306,7 +276,6 @@ export default {
     transform: translateY(0);
   }
 }
-
 @media screen and (max-width: 500px) {
   .flex-parallax {
     height: 1000px;
@@ -315,4 +284,4 @@ export default {
     height: 100%;
   }
 }
-</style>>
+</style>

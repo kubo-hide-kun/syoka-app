@@ -120,24 +120,70 @@
 </template>
 
 <script>
+import firebase from '../fire';
+let uid = localStorage.getItem('uid');
+let name = "";
 export default {
   data() {
     return {
       dialog: false,
       modeFrag: true,
       projects: [
-        { title: "A-projects", isFire: true },
-        { title: "B-projects", isFire: false },
-        { title: "C-projects", isFire: false },
-        { title: "D-projects", isFire: true }
+        // { title: "A-projects", isFire: true },
+        // { title: "B-projects", isFire: false },
+        // { title: "C-projects", isFire: false },
+        // { title: "D-projects", isFire: true }
       ]
     };
   },
+  created () {
+    let projects = this.projects
+    let citiesRef = firebase.firestore().collection('projects');
+    citiesRef.get()
+    .then(snapshot => {
+        snapshot.forEach(doc => {
+            if(doc.data()[uid]){
+                projects.push({title:doc.data().title})
+            }
+        });
+    })
+    .catch(err => {
+        console.log('Error getting documents', err);
+    });
+  },
   methods: {
     choiceProjects(project) {
-      console.log(project.title);
+      console.log(project.title);　
+      localStorage.setItem('project',project.title);
     },
     post() {
+      let title = this.title
+      let des = this.description
+      let projects = this.projects
+      console.log(this.title)
+      console.log(uid)
+      let record = firebase.firestore().collection('users').doc(uid);
+        record.get().then((reco)=>{
+            if (reco.exists) {
+                console.log( reco.data().name );
+                name = reco.data().name
+                if(!des) {
+                    firebase.firestore().collection('projects').doc(title).set({[uid]:name,title: title})
+                    projects.push({title:title})
+                }else{
+                    firebase.firestore().collection('projects').doc(title).set({[uid]:name,title: title,description:des})
+                    projects.push({title:title})
+                }
+            }
+            else {
+                console.log("404");
+            }
+        }).catch( (error) => {
+                console.log(`データを取得できませんでした (${error})`);
+            });
+      this.title = ""
+      this.description = ""
+
       this.dialog = false;
     }
   }
